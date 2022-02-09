@@ -22602,10 +22602,22 @@ _FM["myapp"]=new Object();
                 function start_ar(video) {
                     var cameraParam = new ARCameraParam();
                     var arController = null;
+                    var ww = video.videoWidth;
+                    var hh = video.videoHeight;
+                    var ra = ( window.innerWidth/ww);
+                    ww *= ra;
+                    hh *= ra;
 
-                    app.render_system.set_size(video.videoWidth, video.videoHeight);
+
+                    dapp.style.width = ww + "px";
+                    dapp.style.height = hh + "px";
+                    setTimeout(function () {
+                        app.render_system.resize();
+                    }, 100);
+                    
+                   // app.render_system.set_size(video.videoWidth, video.videoHeight);
                     cameraParam.onload = async function () {
-                        arController = new ARController(video, cameraParam);
+                        arController = new ARController(video.videoWidth, video.videoHeight, cameraParam);
                         console.log(arController);
                         //14: -0.20000100135803223
                         var cpm = arController.getCameraMatrix();
@@ -22614,8 +22626,11 @@ _FM["myapp"]=new Object();
 
                         //  cpm[10] *= cpm[10];
                         //  cpm[14] *= cpm[14];
-                        // arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
-                        camera.ge_camera.set_freez_projection(cpm);
+
+                        var a00 = 1.0 / Math.tan(45 / 2);
+                        cpm[0] = a00 / (ww/hh);
+                         arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
+                        //camera.ge_camera.set_freez_projection(cpm);
                     };
                     cameraParam.load('camera_para-iPhone.dat');
                     var video_textre = new ge.webgl.canvas_texture(video.videoWidth,video.videoHeight);
@@ -22638,7 +22653,7 @@ _FM["myapp"]=new Object();
 
                     var ppos = [], prot = [], pscale = [], qt = [];
 
-                    math.mat4.scale(tmat, [0.15, 0.15, 0.15]);
+                    math.mat4.scale(tmat, [0.11, 0.11, 0.11]);
 
                     setInterval(function () {
 
@@ -22646,7 +22661,7 @@ _FM["myapp"]=new Object();
                             return;
                         }
                         video_textre.ctx.save();
-                        video_textre.ctx.translate(0, 240);
+                        video_textre.ctx.translate(0, video_textre.canvas.height);
                         video_textre.ctx.scale(1, -1);
                         video_textre.ctx.drawImage(video, 0, 0);
 
@@ -22689,9 +22704,7 @@ _FM["myapp"]=new Object();
 
                             math.mat4.identity(tmp);
                             //   math.mat4.scale(tmp, pscale);
-                            tmp[12] = ppos[0];
-                            tmp[13] = ppos[1];
-                            tmp[14] = ppos[2];
+                            tmp[12] = ppos[0]; tmp[13] = ppos[1];tmp[14] = ppos[2];
 
                             //trans.sys.set_pos(trans, ppos[0], ppos[1], ppos[2]);
                             math.mat4.multiply(tmp, tmp, tmat);
@@ -22720,7 +22733,7 @@ _FM["myapp"]=new Object();
 
 
 
-                    }, 100);
+                    }, 50);
                 }
 
                  ARController.getUserMedia({
