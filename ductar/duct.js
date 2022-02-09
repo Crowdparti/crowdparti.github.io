@@ -16694,6 +16694,12 @@ void fragment(void) {
       this.camera.ge_camera.update_aspect(rect.width / rect.height);
     }
 
+    proto.set_size = function (w, h) {
+
+      this.renderer.set_canvas_size(w, h);
+      this.camera.ge_camera.update_aspect(w / h);
+    }
+
     proto.setup_host = function (host) {
       this.host = host;
       this.host.appendChild(this.renderer.canvas);
@@ -22355,6 +22361,7 @@ _FM["myapp"]=new Object();
 (function(){ return function (fin, ge, math, html) {
             
             var dapp = html.elm$('<div style="width:100%;height:calc(100%);position:absolute;left:0%;top:0%;"></div>');
+
             document.body.appendChild(dapp);
             var app = new ge.app({
                 renderer: {
@@ -22579,137 +22586,151 @@ _FM["myapp"]=new Object();
 
             function ar_features() {
 
+                var tw = 1280 / 2;
+                var th = 720 / 2;
 
-
-                var video = ARController.getUserMedia({
-                    maxARVideoSize: 640,
-                    facing: "environment",
-                    onSuccess: function (video) {
-                        //  document.body.appendChild(video);
+                var hdConstraints = {
+                    audio: false,
+                    video: {
+                        mandatory: {
+                            maxWidth: tw,
+                            maxHeight: th
+                        }
                     }
-                });
-
-
-                var cameraParam = new ARCameraParam();
-                var arController = null;
-
-                cameraParam.onload = async function () {
-                    arController = new ARController(320, 240, cameraParam);
-                    console.log(arController);
-                    //14: -0.20000100135803223
-                    var cpm = arController.getCameraMatrix();
-                    cpm[10] = -1.0000100135803223;
-                    cpm[14] = -0.20000100135803223;
-
-                    //  cpm[10] *= cpm[10];
-                    //  cpm[14] *= cpm[14];
-                    // arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
-                    camera.ge_camera.set_freez_projection(cpm);
                 };
-                cameraParam.load('camera_para.dat');
-                var video_textre = new ge.webgl.canvas_texture(320, 240);
-                app.render_system.scene_render.add(function () {
-                    app.render_system.renderer.draw_textured_quad(video_textre, 0, 0, 1, 1);
-                });
-                var isVisible = false;
-                var markerMatrix = new Float64Array(12);
-                var trans = app.root.ge_transform;
 
-                var tmp = math.mat4(), markerNum = 0;
+                function start_ar(video) {
+                    var cameraParam = new ARCameraParam();
+                    var arController = null;
 
-                var tmat = math.mat4();
-                math.mat4.identity(tmat);
+                    app.render_system.set_size(video.videoWidth, video.videoHeight);
+                    cameraParam.onload = async function () {
+                        arController = new ARController(video, cameraParam);
+                        console.log(arController);
+                        //14: -0.20000100135803223
+                        var cpm = arController.getCameraMatrix();
+                        // cpm[10] = -1.0000100135803223;
+                        // cpm[14] = -0.20000100135803223;
 
-                var lgmat = math.mat4();
-                math.mat4.identity(lgmat);
+                        //  cpm[10] *= cpm[10];
+                        //  cpm[14] *= cpm[14];
+                        // arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
+                        camera.ge_camera.set_freez_projection(cpm);
+                    };
+                    cameraParam.load('camera_para-iPhone.dat');
+                    var video_textre = new ge.webgl.canvas_texture(video.videoWidth,video.videoHeight);
+                    app.render_system.scene_render.add(function () {
+                        app.render_system.renderer.draw_textured_quad(video_textre, 0, 0, 1, 1);
+                    });
+                    var isVisible = false;
+                    var markerMatrix = new Float64Array(12);
+                    var trans = app.root.ge_transform;
 
-                math.mat4.from_quat(lgmat, lg1.worker_transform.rot);
+                    var tmp = math.mat4(), markerNum = 0;
 
-                var ppos = [], prot = [], pscale = [], qt = [];
+                    var tmat = math.mat4();
+                    math.mat4.identity(tmat);
 
-                math.mat4.scale(tmat, [0.15, 0.15, 0.15]);
+                    var lgmat = math.mat4();
+                    math.mat4.identity(lgmat);
 
-                setInterval(function () {
+                    math.mat4.from_quat(lgmat, lg1.worker_transform.rot);
 
-                    if (!arController) {
-                        return;
-                    }
-                    video_textre.ctx.save();
-                    video_textre.ctx.translate(0, 240);
-                    video_textre.ctx.scale(1, -1);
-                    video_textre.ctx.drawImage(video, 0, 0);
+                    var ppos = [], prot = [], pscale = [], qt = [];
 
+                    math.mat4.scale(tmat, [0.15, 0.15, 0.15]);
 
-                    video_textre.ctx.restore();
+                    setInterval(function () {
 
-                    video_textre.update();
-
-                    arController.detectMarker(video);
-                    markerNum = arController.getMarkerNum();
+                        if (!arController) {
+                            return;
+                        }
+                        video_textre.ctx.save();
+                        video_textre.ctx.translate(0, 240);
+                        video_textre.ctx.scale(1, -1);
+                        video_textre.ctx.drawImage(video, 0, 0);
 
 
-                    if (markerNum > 0) {
+                        video_textre.ctx.restore();
 
-                        if (isVisible) {
-                            arController.getTransMatSquareCont(0, 1, markerMatrix, markerMatrix);
+                        video_textre.update();
+
+                        arController.detectMarker(video);
+                        markerNum = arController.getMarkerNum();
+
+
+                        if (markerNum > 0) {
+
+                            if (isVisible) {
+                                arController.getTransMatSquareCont(0, 1, markerMatrix, markerMatrix);
+                            } else {
+                                arController.getTransMatSquare(0 /* Marker index */, 1 /* Marker width */, markerMatrix);
+                            }
+
+                            isVisible = true;
+
+
+
+                            // arController.arglCameraViewRHf(arController.transMatToGLMat(m1.markerMatrix), m1.ge_renderable.items[0].matrix_world);
+
+                            arController.arglCameraViewRHf(arController.transMatToGLMat(markerMatrix), tmp);
+                            /*
+                            math.mat4.get_rotation(trans.rotation, tmp);
+                            math.mat4.get_translation(trans.position, tmp);
+                            math.mat4.get_scaling(trans.scale, tmp);
+                            trans.require_update = 1;
+                            */
+
+                            // math.mat4.get_rotation(prot, tmp);
+                            math.mat4.get_translation(ppos, tmp);
+                            //  math.mat4.get_scaling(pscale, tmp);
+                            // math.quat.rotate_eular(qt, prot[0], prot[1], prot[2]);
+                            // math.mat4.from_quat(tmp, prot);
+
+                            math.mat4.identity(tmp);
+                            //   math.mat4.scale(tmp, pscale);
+                            tmp[12] = ppos[0];
+                            tmp[13] = ppos[1];
+                            tmp[14] = ppos[2];
+
+                            //trans.sys.set_pos(trans, ppos[0], ppos[1], ppos[2]);
+                            math.mat4.multiply(tmp, tmp, tmat);
+
+                            // math.mat4.multiply(tmp, tmp, tmat);
+                            meshes.forEach(function (m) {
+                                if (m.is_lg) {
+
+                                    // math.mat4.multiply(m.matrix_world, tmp, lgmat);
+                                }
+                                else {
+                                    m.matrix_world = tmp;
+                                    // m.matrix_world[12] = tmp[12];
+                                    // m.matrix_world[13] = tmp[13];
+                                    // m.matrix_world[14] = tmp[14];
+
+                                }
+
+                                //
+                            });
+
                         } else {
-                            arController.getTransMatSquare(0 /* Marker index */, 1 /* Marker width */, markerMatrix);
+                            isVisible = false;
+
                         }
 
-                        isVisible = true;
 
 
+                    }, 100);
+                }
 
-                        // arController.arglCameraViewRHf(arController.transMatToGLMat(m1.markerMatrix), m1.ge_renderable.items[0].matrix_world);
-
-                        arController.arglCameraViewRHf(arController.transMatToGLMat(markerMatrix), tmp);
-                        /*
-                        math.mat4.get_rotation(trans.rotation, tmp);
-                        math.mat4.get_translation(trans.position, tmp);
-                        math.mat4.get_scaling(trans.scale, tmp);
-                        trans.require_update = 1;
-                        */
-
-                        // math.mat4.get_rotation(prot, tmp);
-                        math.mat4.get_translation(ppos, tmp);
-                        //  math.mat4.get_scaling(pscale, tmp);
-                        // math.quat.rotate_eular(qt, prot[0], prot[1], prot[2]);
-                        // math.mat4.from_quat(tmp, prot);
-
-                        math.mat4.identity(tmp);
-                        //   math.mat4.scale(tmp, pscale);
-                        tmp[12] = ppos[0];
-                        tmp[13] = ppos[1];
-                        tmp[14] = ppos[2];
-
-                        //trans.sys.set_pos(trans, ppos[0], ppos[1], ppos[2]);
-                        math.mat4.multiply(tmp, tmp, tmat);
-
-                        // math.mat4.multiply(tmp, tmp, tmat);
-                        meshes.forEach(function (m) {
-                            if (m.is_lg) {
-
-                                // math.mat4.multiply(m.matrix_world, tmp, lgmat);
-                            }
-                            else {
-                                m.matrix_world = tmp;
-                                // m.matrix_world[12] = tmp[12];
-                                // m.matrix_world[13] = tmp[13];
-                                // m.matrix_world[14] = tmp[14];
-
-                            }
-
-                            //
-                        });
-
-                    } else {
-                        isVisible = false;
-
-                    }
+                 ARController.getUserMedia({
+                    maxARVideoSize: 320,
+                    facing: "environment",
+                    onSuccess: start_ar
+                });
 
 
-
-                }, 100);
+               
 
             }
             function start_sim() {
