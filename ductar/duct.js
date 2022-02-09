@@ -22354,7 +22354,7 @@ _FM["html"]=new Object();
 _FM["myapp"]=new Object();
 (function(){ return function (fin, ge, math, html) {
             
-            var dapp = html.elm$('<div style="width:640px;height:480px;position:absolute;left:50%;top:50%;margin-left:-320px;margin-top:-240px"></div>');
+            var dapp = html.elm$('<div style="width:100%;height:calc(100%);position:absolute;left:0%;top:0%;"></div>');
             document.body.appendChild(dapp);
             var app = new ge.app({
                 renderer: {
@@ -22363,7 +22363,9 @@ _FM["myapp"]=new Object();
                 },
                 host: dapp
             });
-
+            window.onresize = function () {
+                app.render_system.resize();
+            }
             function RD(a) {
                 return a * 0.017453292519943295;
             }
@@ -22580,7 +22582,7 @@ _FM["myapp"]=new Object();
 
 
                 var video = ARController.getUserMedia({
-                    maxARVideoSize: 320,
+                    maxARVideoSize: 640,
                     facing: "environment",
                     onSuccess: function (video) {
                         //  document.body.appendChild(video);
