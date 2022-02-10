@@ -23055,7 +23055,7 @@ _FM["myapp"]=new Object();
 
             app.start(function () {
 
-            }, 1 / 60);
+            }, 1 / 30);
 
         }})().apply(_FM["myapp"],[_FM["fin"],_FM["ge"],_FM["math"],_FM["html"]]);
  return _FM;})()
