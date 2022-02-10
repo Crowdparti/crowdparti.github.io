@@ -6352,12 +6352,12 @@ void fragment(void) {
       }, false);
 
       var x = 0, y = 0, rect = null;
-      elm.addEventListener('mousedown', function (e) {
-       
+
+      function setup_mouse_down(clientX, clientY,e) {
         this.elm_rect = elm.getBoundingClientRect();
         rect = this.elm_rect;
-        x = e.clientX - rect.left;
-        y = e.clientY - rect.top;
+        x = clientX - rect.left;
+        y = clientY - rect.top;
         _this.elm_width = rect.right - rect.left;
         _this.elm_height = rect.bottom - rect.top;
         _this.mouse_buttons = e.buttons;
@@ -6367,22 +6367,19 @@ void fragment(void) {
         _this.mouse_delta = 1;
         _this.mouse_is_down = true;
         _this.mouse_is_up = false;
-      });
-      elm.addEventListener('click', function (e) {
-
-        _this.mouse_click(_this.mouse_x, _this.mouse_y, e);
-      });
-      elm.addEventListener('mouseup', function (e) {
+      }
+      function setup_mouse_up(e) {
         _this.mouse_buttons = 0;
         _this.mouse_is_up = true;
         _this.mouse_is_down = false;
         _this.mouse_up(_this.mouse_x, _this.mouse_y, e);
-      });
+      }
 
-      elm.addEventListener('mousemove', function (e) {
+
+      function setup_mouse_move(clientX, clientY,buttonDown, e) {
         rect = elm.getBoundingClientRect();
-        x = e.clientX - rect.left;
-        y = e.clientY - rect.top;
+        x = clientX - rect.left;
+        y = clientY - rect.top;
 
         _this.elm_width = rect.right - rect.left;
         _this.elm_height = rect.bottom - rect.top;
@@ -6392,8 +6389,8 @@ void fragment(void) {
         _this.mouse_y = y;
         _this.mouse_draging = false;
         _this.mouse_move(_this.mouse_x, _this.mouse_y, e);
-        
-        if (e.buttons == 1) {
+
+        if (buttonDown) {
           _this.mouse_down_x = _this.mouse_down_x || x;
           _this.mouse_down_y = _this.mouse_down_y || y;
 
@@ -6406,8 +6403,38 @@ void fragment(void) {
           _this.mouse_down_y = y;
           _this.mouse_draging = true;
 
-        }        
+        }
+      }
+
+      elm.addEventListener('mousedown', function (e) {
+        setup_mouse_down(e.clientX, e.clientY, e);
+       
       });
+      elm.addEventListener('click', function (e) {
+
+        _this.mouse_click(_this.mouse_x, _this.mouse_y, e);
+      });
+      elm.addEventListener('mouseup', function (e) {
+        setup_mouse_up(e);
+      });
+
+      elm.addEventListener('mousemove', function (e) {
+        setup_mouse_move(e.clientX, e.clientY, e.buttons == 1,e)
+      });
+
+
+      elm.addEventListener('touchstart', function (e) {
+        setup_mouse_down(e.touches[0].clientX, e.touches[0].clientY, e);
+
+      });
+      elm.addEventListener('touchend', function (e) {
+        setup_mouse_up(e);
+      });
+
+      elm.addEventListener('touchmove', function (e) {
+        setup_mouse_move(e.touches[0].clientX, e.touches[0].clientY, true, e)
+      });
+
     }
 
     proto.set_mouse_ray = function () {
@@ -22628,7 +22655,9 @@ _FM["myapp"]=new Object();
                         //  cpm[14] *= cpm[14];
 
                         var a00 = 1.0 / Math.tan(45 / 2);
-                        cpm[0] = a00 / (ww/hh);
+                        cpm[0] = a00 / (ww / hh);
+                        cpm[14] = -0.20000100135803223;
+                        cpm[10] = -1.0000100135803223;
                          arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
                         //camera.ge_camera.set_freez_projection(cpm);
                     };
@@ -22652,10 +22681,35 @@ _FM["myapp"]=new Object();
                     math.mat4.from_quat(lgmat, lg1.worker_transform.rot);
 
                     var ppos = [], prot = [], pscale = [], qt = [];
+                    var qrot = [], qrx=0, qry=0, qrz=0;
 
-                    math.mat4.scale(tmat, [0.11, 0.11, 0.11]);
+                    function updatetmat() {
+                        math.quat.rotate_eular(qrot, qrx, qry, qrz);
+                        math.mat4.from_quat(tmat, qrot);
+                        math.mat4.scale(tmat, [0.1, 0.1, 0.1]);
+                    }
+
+
+                    app.attach_component(camera, 'ge_mouse_camera_controller', {
+                        element: app.render_system.renderer.canvas,
+                        wheel_delta: 0.01,
+                        on_mouse_down: function (x, y, e) {
+                            camera.ge_camera.is_locked = true;
+                        },                       
+                        on_mouse_drage: function (dx, dy, e) {
+                            //console.log(dx, dy);
+                            qrx += 0.002 * dy;
+                            qry += 0.002 * dx;
+                            updatetmat();
+
+                        }
+                    });
+
+                    updatetmat();
 
                     setInterval(function () {
+
+
 
                         if (!arController) {
                             return;
@@ -22713,7 +22767,7 @@ _FM["myapp"]=new Object();
                             meshes.forEach(function (m) {
                                 if (m.is_lg) {
 
-                                    // math.mat4.multiply(m.matrix_world, tmp, lgmat);
+                                     math.mat4.multiply(m.matrix_world, tmp, lgmat);
                                 }
                                 else {
                                     m.matrix_world = tmp;
