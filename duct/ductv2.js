@@ -20632,7 +20632,7 @@ _FM["myapp"]=new Object();
           }
           var app = new ge.app({
               renderer: {
-                  pixel_ratio1: 1
+                  pixel_ratio: 1
               }
           });
           window.onresize = function () {
@@ -20662,7 +20662,7 @@ _FM["myapp"]=new Object();
           document.onmouseup = app.render_system.camera_state();
 
   camera.set_position({
-    "pos": { "0": -1.8413097858428955, "1": 3.6712849140167236, "2": 23.231590270996094 },
+    "pos": [ 0, 3.67, 23.23],
     "eular": [-0.08999999999999983, -0.01500000000000367, 0]
   });
 
