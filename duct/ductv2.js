@@ -21055,8 +21055,8 @@ _FM["myapp"]=new Object();
               });
 
               var u_par_colors = [
-                  math.vec4((251/255)*4, (255/255)*4, 0 ,0.85),
-                  math.vec4(52/255, 152/255, 219/255 , 0.05),
+                  math.vec4((251 / 255) * 4, (255 / 255) * 4, 0, 0.85),
+                  math.vec4(52 / 255, 152 / 255, 219 / 255, is_mobile ? 0.1 : 0.05),
                   math.vec4(52 / 255, 152 / 255, 219 / 255, 0.85)
               ]
 
@@ -21413,7 +21413,7 @@ gl_FragColor.w*=v_par_color.w;
 
           app.start(function () {
 
-          }, is_mobile ? (1 / 30) : (1 / 60));
+          }, is_mobile ? (1 / 40) : (1 / 60));
 
       }})().apply(_FM["myapp"],[_FM["fin"],_FM["math"],_FM["gltf"],_FM["ge"],_FM["html"]]);
  return _FM;})()
