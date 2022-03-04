@@ -20650,7 +20650,7 @@ _FM["myapp"]=new Object();
 
 
 
-
+          app.root.eular = [0, 0, 0];
           app.attach_component(camera, 'ge_mouse_camera_controller', {
               element: app.render_system.renderer.canvas,
               wheel_delta: 0.01,
@@ -20661,6 +20661,12 @@ _FM["myapp"]=new Object();
               on_mouse_up: function (x, y, e) {
                   camera.ge_camera.is_locked = false;
               },
+              on_mouse_drage: function (dx, dy, e) {
+                  app.root.eular[0] += dy * 0.005;
+                  app.root.eular[1] += dx * 0.005;
+                  app.root.transform.set_eular(app.root.eular[0], app.root.eular[1], app.root.eular[2]);
+                  return false;
+              }
           });
 
 
@@ -21186,12 +21192,12 @@ gl_FragColor.w*=v_par_color.w;
 
               renderables.push(pmesh);
               pas.spawn_emitter_instance(1000, 0, [4, -1, 2, 1,
-                  -2.6, -1.7, 5.25, -1.8, -1.75, 5.55]);
+                  -2.6, -1.5, 5.25, -1.8, -1.75, 5.55]);
 
               setTimeout(function () {
 
                   pas.spawn_emitter_instance(1000, 0, [4, -1, 3, 1,
-                      2.6, -1.7, 5.25, 1.8, -1.75, 5.55]);
+                      2.6, -1.5, 5.25, 1.8, -1.75, 5.55]);
 
               }, 4000);
 
@@ -21366,8 +21372,8 @@ gl_FragColor.w*=v_par_color.w;
               var human_geo1 = human_geo.clone();
               var human_geo2 = human_geo.clone();
 
-              human_geo1.scale_position_rotation(1, 1, 1, -3, -6, 5, 0, 1, 0);
-              human_geo2.scale_position_rotation(1, 1, 1, 3, -6, 5, 0, -1, 0);
+              human_geo1.scale_position_rotation(1, 1, 1, -3, -5.9, 5, 0, 1, 0);
+              human_geo2.scale_position_rotation(1, 1, 1, 3, -5.9, 5, 0, -1, 0);
 
 
               renderables.push(new ge.geometry.mesh({
@@ -21391,7 +21397,7 @@ gl_FragColor.w*=v_par_color.w;
 
               var e = app.create_renderables(renderables, function (m, e) {
 
-
+                  e.transform.set_parent(app.root.transform);
 
               });
 
