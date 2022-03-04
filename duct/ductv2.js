@@ -20725,9 +20725,11 @@ _FM["myapp"]=new Object();
         S0$x = 1 / Math.sqrt(S0$x);
       }
       v3[0] = v3[0] * S0$x; v3[1] = v3[1] * S0$x; v3[2] = v3[2] * S0$x;
-                              ins.dx = v3[0]*1.85;
-                              ins.dy = v3[1]*1.85;
-                              ins.dz = v3[2]*1.85;
+                              v3[1] += Math.random();
+
+                              ins.dx = v3[0] * 2;
+                              ins.dy = v3[1] * ((Math.random() - 0.5) * 3);
+                              ins.dz = v3[2] * 1;
 
 
 
@@ -20753,7 +20755,7 @@ _FM["myapp"]=new Object();
                               }
                               else {
                                   for (i = 0; i < 20; i++) {
-                                      par = sys.queue_particle(ins.emi.get_particle(ins), (i / 10) * 2, ins.id, ins.par_life);
+                                      par = sys.queue_particle(ins.emi.get_particle(ins), (i / 20) * 2, ins.id, ins.par_life);
 
                                   }
                               }
@@ -20937,6 +20939,7 @@ _FM["myapp"]=new Object();
                           par[7] *= (0.995);
                           par[8] *= (0.995);
 
+
                           for (si = 0; si < sucks.length; si++) {
                               suc = sucks[si];
 
@@ -20953,7 +20956,7 @@ _FM["myapp"]=new Object();
                               pdist = Math.sqrt(dd);
 
 
-                              if (!suc.check(par,pdist)) continue;
+                              if (!suc.check(par, pdist) || !sys.system_working) continue;
                              
 
 
@@ -21046,9 +21049,9 @@ _FM["myapp"]=new Object();
               });
 
               var u_par_colors = [
-                  math.vec4(5.0, 0.0, 0.0,0.75),
-                  math.vec4(5, 5, 5, 0.08),
-                  math.vec4((249 / 255) * 4, (231 / 255) * 4, 0, 0.35)
+                  math.vec4((251/255)*4, (255/255)*4, 0 ,0.85),
+                  math.vec4(52/255, 152/255, 219/255 , 0.05),
+                  math.vec4(52 / 255, 152 / 255, 219 / 255, 0.85)
               ]
 
               var u_par_size = math.vec3(150.0, 410.0, 510.0);
