@@ -1353,6 +1353,9 @@
 
   })();
 
+  fin.is_mobile= function () {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
 
   Object.assign(fin, {
     macro_scope: function (func, name) { func(); return func; },
@@ -7546,22 +7549,25 @@ void fragment(void) {
       
       elm.addEventListener('touchend', function (e) {
         setup_mouse_up(e);
+
+        if (e.touches.length===0) pinch_start = false;
         e.stopPropagation();
         e.preventDefault();
       });
 
-      var last_pinch = 0,current_pinch, pnx, pny;
+      var last_pinch = 0, current_pinch, pnx, pny, pinch_start = false;
 
       elm.addEventListener('touchstart', function (e) {
 
 
-        if (e.touches.length === 1) {
+        if (e.touches.length === 1 && !pinch_start) {
           setup_mouse_down(e.touches[0].clientX, e.touches[0].clientY, e);
         }
-        else if (e.touches.length === 2) {
+        else if (e.touches.length === 2 && !pinch_start) {
           pnx = e.touches[0].clientX - e.touches[1].clientX;
           pny = e.touches[0].clientY - e.touches[1].clientY;
           last_pinch = Math.sqrt(pnx * pnx + pny * pny);
+          pinch_start = true;
         }
 
         e.stopPropagation();
@@ -7569,10 +7575,10 @@ void fragment(void) {
       });
 
       elm.addEventListener('touchmove', function (e) {
-        if (e.touches.length === 1) {
+        if (e.touches.length === 1 && !pinch_start) {
           setup_mouse_move(e.touches[0].clientX, e.touches[0].clientY, true, e);
         }
-        else if (e.touches.length === 2) {
+        else if (e.touches.length === 2 && pinch_start) {
 
           pnx = e.touches[0].clientX - e.touches[1].clientX;
           pny = e.touches[0].clientY - e.touches[1].clientY;
@@ -16932,7 +16938,7 @@ void fragment(void) {
         camera.set_position(JSON.parse(window.localStorage.getItem("cam")));
       }
       var save_func = function () {
-        window.localStorage.setItem('cam', JSON.stringify(camera.get_position()));
+        window.localStorage.setItem('cam', JSON.stringify( camera.get_position()));
       };
 
       return save_func;
@@ -17035,7 +17041,7 @@ void fragment(void) {
 
       this.camera.get_position = function () {
         return {
-          pos: self.camera.transform.pos,
+          pos: [self.camera.transform.pos[0], self.camera.transform.pos[1], self.camera.transform.pos[2]],
           eular: self.camera.ge_camera.eular
         }
       };
@@ -20625,7 +20631,7 @@ _FM["myapp"]=new Object();
 (function(){ return function (fin, math, gltf, ge, html) {
           
 
-
+          var is_mobile = fin.is_mobile();
 
           function RD(a) {
               return a * 0.017453292519943295;
@@ -20658,13 +20664,12 @@ _FM["myapp"]=new Object();
           });
 
 
- 
           document.onmouseup = app.render_system.camera_state();
+          camera.set_position({
+              "pos": [-0.578, 1.408, 26.03],
+              "eular": [0.015, -3.6754e-15, 0]
+          });
 
-  camera.set_position({
-    "pos": [ 0, 3.67, 23.23],
-    "eular": [-0.08999999999999983, -0.01500000000000367, 0]
-  });
 
           app.create_renderable(new ge.shading.light({
               intensity: 1,
@@ -21042,11 +21047,11 @@ _FM["myapp"]=new Object();
 
               var u_par_colors = [
                   math.vec4(5.0, 0.0, 0.0,0.75),
-                  math.vec4(5, 5, 5, 0.05),
+                  math.vec4(5, 5, 5, 0.08),
                   math.vec4((249 / 255) * 4, (231 / 255) * 4, 0, 0.35)
               ]
 
-              var u_par_size = math.vec3(150.0, 510.0, 610.0);
+              var u_par_size = math.vec3(150.0, 410.0, 510.0);
 
               var pmesh = new ge.geometry.mesh({
                   geometry: ge.geometry.geometry_data.create({
@@ -21259,7 +21264,7 @@ gl_FragColor.w*=v_par_color.w;
               }, 0.01);
 
 
-            var btn = html.elm$('<button  style="font-size:100%;position:absolute;right:10px;top:10px;width:200px;">DUCT SYSTEM DISABLED</button>')
+              var btn = html.elm$('<button  style="font-size:150%;position:absolute;right:10px;top:10px;width:200px;">DUCT SYSTEM ENABLED</button>')
 
               document.body.appendChild(btn);
               btn.onclick = function () {
@@ -21399,7 +21404,7 @@ gl_FragColor.w*=v_par_color.w;
 
           app.start(function () {
 
-          }, 1 / 60);
+          }, is_mobile ? (1 / 30) : (1 / 60));
 
       }})().apply(_FM["myapp"],[_FM["fin"],_FM["math"],_FM["gltf"],_FM["ge"],_FM["html"]]);
  return _FM;})()
