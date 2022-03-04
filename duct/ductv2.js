@@ -21055,12 +21055,12 @@ _FM["myapp"]=new Object();
               });
 
               var u_par_colors = [
-                  math.vec4((251 / 255) * 4, (255 / 255) * 4, 0, 0.85),
-                  math.vec4(52 / 255, 152 / 255, 219 / 255, is_mobile ? 0.1 : 0.05),
+                  math.vec4((251 / 255) * 4, (255 / 255) * 4, 0, 0.75),
+                  math.vec4(52 / 255, 152 / 255, 219 / 255, is_mobile ? 0.3 : 0.05),
                   math.vec4(52 / 255, 152 / 255, 219 / 255, 0.85)
               ]
 
-              var u_par_size = math.vec3(150.0, 410.0, 510.0);
+              var u_par_size = math.vec3(250.0, 410.0, 510.0);
 
               var pmesh = new ge.geometry.mesh({
                   geometry: ge.geometry.geometry_data.create({
