@@ -20873,7 +20873,7 @@ _FM["myapp"]=new Object();
               on_mouse_up: function (x, y, e) {
                   camera.ge_camera.is_locked = false;
               },
-              on_mouse_drage2: function (dx, dy, e) {
+              on_mouse_drage: function (dx, dy, e) {
                   app.root.eular[0] += dy * 0.005;
                   app.root.eular[1] += dx * 0.005;
                   app.root.transform.set_eular(app.root.eular[0], app.root.eular[1], app.root.eular[2]);
