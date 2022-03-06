@@ -20873,7 +20873,7 @@ _FM["myapp"]=new Object();
               on_mouse_up: function (x, y, e) {
                   camera.ge_camera.is_locked = false;
               },
-              on_mouse_drage: function (dx, dy, e) {
+              on_mouse_drage2: function (dx, dy, e) {
                   app.root.eular[0] += dy * 0.005;
                   app.root.eular[1] += dx * 0.005;
                   app.root.transform.set_eular(app.root.eular[0], app.root.eular[1], app.root.eular[2]);
@@ -20884,7 +20884,7 @@ _FM["myapp"]=new Object();
          
 
          document.onmouseup = app.render_system.camera_state(true);
-          camera.set_position({ "pos": [0, 0, 95.15998840332031], "eular": [0, 0, 0] });
+          camera.set_position({ "pos": [-4.180256366729736, 0,75.78575134277344], "eular": [0.039844360351562504, 0.15938049316406255, 0] });
 
 
        
@@ -21063,135 +21063,130 @@ gl_FragColor=u_draw_color;
           }
               
 
-          function setup_fan(done) {
+
+          function load_fan(fanobj, fanmtl) {
+              var g = ge.geometry.shapes.obj.parse(fanobj, fanmtl);
+              g.scale_position_rotation(0.5, 0.5, 0.5, 0, 0, 0, 0.017453292519943295 * 180, 0.017453292519943295 * 90, 0);
+
+              var materials = {};
+              var textures = {};
+
+              var mats = {
+                  'chairs': {
+                      cast_shadows: true
+                  },
+                  'kitchentable': {
+                      cast_shadows: true
+                  },
+                  'tvtable': {
+                      cast_shadows: true
+                  },
+                  'sofatable': {
+                      cast_shadows: true
+                  },
+
+                  'fan3': {
+                      ambient: [0.82, 0.82, 0.82],
+                  },
+                  'frontwall': {
+                      transparent: 0.25,
+                      specular1: [2, 2, 2],
+                      ambient: [0.82, 0.82, 0.82],
+                      transparent_layer: 10,
+                      diffuse: [0, 0, 0]
+                  },
+                  'floor': {
+                      receive_shadows: true,
+                      ambient: [112 / 255, 123 / 255, 124 / 255],
+                      diffuse: [0.5, 0.5, 0.5],
+                      specular: [0, 0, 0]
+                  }
 
 
-              fin.urls_loader([["f4.obj"], ["f4.mtl"]], function (datas) {
-
-                  var g = ge.geometry.shapes.obj.parse(datas[0], datas[1]);
-                  g.scale_position_rotation(0.5, 0.5, 0.5, 0, 0, 0, 0.017453292519943295 * 180, 0.017453292519943295 * 90, 0);
-
-                  var materials = {};
-                  var textures = {};
-
-                  var mats = {
-                      'chairs': {
-                          cast_shadows: true
-                      },
-                      'kitchentable': {
-                          cast_shadows: true
-                      },
-                      'tvtable': {
-                          cast_shadows: true
-                      },
-                      'sofatable': {
-                          cast_shadows: true
-                      },
-
-                      'fan3': {
-                          ambient: [0.82, 0.82, 0.82],
-                      },
-                      'frontwall': {
-                          transparent: 0.25,
-                          specular1: [2, 2, 2],
-                          ambient: [0.82, 0.82, 0.82],
-                          transparent_layer: 10,
-                          diffuse: [0, 0, 0]
-                      },
-                      'floor': {
-                          receive_shadows: true,
-                          ambient: [112 / 255, 123 / 255, 124 / 255],
-                          diffuse: [0.5, 0.5, 0.5],
-                          specular: [0, 0, 0]
-                      }
+              };
 
 
-                  };
-
-
-                  g.obj_meta.materials.forEach(function (mat) {
-                      //mat.wireframe = true;
-                      mat.ambient = mat.diffuse;
-                      mat.diffuse = [0.5, 0.5, 0.5];
-                      if (mats[mat.name]) {
-                          Object.assign(mat, mats[mat.name]);
-                      }
-                      //mat.diffuse = [0.5, 0.5, 0.5];
-                      materials[mat.name] = new ge.shading.shaded_material(mat);
-
-                  });
-
-                  console.log(materials);
-
-
-
-
-
-                  var renderables = [];
-
-                  g.obj_meta.meshes.forEach(function (ms) {
-                     
-                      if (ms.mat === "fan3") {
-
-                          var fgm = ge.geometry.geometry_data.to_distributed_geometry(g, [ms]);
-                          fgm.center_pivot(1, 1, 1, 0, 0, 0);
-
-                          var fmm = new ge.active_mesh({
-                              geometry: fgm,
-                              material: materials[ms.mat] || (new ge.shading.shaded_material({})),
-                              position: fgm.distribution[0].origin,
-                              rotate1: [0, 0, 0]
-                          });
-
-                          fmm.fan_wings = true;
-
-                          
-
-                          renderables.push(fmm);
-
-                      }
-                      else {
-                          renderables.push(new ge.geometry.mesh({
-                              geometry: g,
-                              material: materials[ms.mat] || (new ge.shading.shaded_material({})),
-                              draw_offset: ms.draw_offset,
-                              draw_count: ms.draw_count
-                          }));
-                      }
-
-                  });
-
-
-                  var e = app.create_renderables(renderables, function (m, e) {
-
-                      e.transform.set_parent(app.root.transform);
-                      e.transform.set_eular(0, RD(120), 0).set_pos(-48, -4, 14);
-
-                      if (m.fan_wings) {
-                          e.fan_wings = m;
-                          
-                      }
-
-                  });
-
-                  fin.timers.start(function () {
-
-                      if (e.fan_is_on) {
-                          math.quat.rotate_eular(e.fan_wings.rotation, 0, 0, -6.3 * ((app.timer % 0.35) / 0.35));
-                          e.fan_wings.require_update = 1;
-                      }
-
-                    
-
-                  }, 1 / 45);
-
-                  done(e);
+              g.obj_meta.materials.forEach(function (mat) {
+                  //mat.wireframe = true;
+                  mat.ambient = mat.diffuse;
+                  mat.diffuse = [0.5, 0.5, 0.5];
+                  if (mats[mat.name]) {
+                      Object.assign(mat, mats[mat.name]);
+                  }
+                  //mat.diffuse = [0.5, 0.5, 0.5];
+                  materials[mat.name] = new ge.shading.shaded_material(mat);
 
               });
 
+              console.log(materials);
+
+
+
+
+
+              var renderables = [];
+
+              g.obj_meta.meshes.forEach(function (ms) {
+
+                  if (ms.mat === "fan3") {
+
+                      var fgm = ge.geometry.geometry_data.to_distributed_geometry(g, [ms]);
+                      fgm.center_pivot(1, 1, 1, 0, 0, 0);
+                      console.log("fgm", fgm);
+                      var fmm = new ge.active_mesh({
+                          geometry: fgm,
+                          material: materials[ms.mat] || (new ge.shading.shaded_material({})),
+                          position: fgm.distribution[0].origin,
+                          rotate1: [0, 0, 0]
+                      });
+
+                      fmm.fan_wings = true;
+
+
+
+                      renderables.push(fmm);
+
+                  }
+                  else {
+                      renderables.push(new ge.geometry.mesh({
+                          geometry: g,
+                          material: materials[ms.mat] || (new ge.shading.shaded_material({})),
+                          draw_offset: ms.draw_offset,
+                          draw_count: ms.draw_count
+                      }));
+                  }
+
+              });
+
+
+              var e = app.create_renderables(renderables, function (m, e) {
+
+                  e.transform.set_parent(app.root.transform);
+                  e.transform.set_eular(0, RD(120), 0).set_pos(-48, -4, 14);
+
+                  if (m.fan_wings) {
+                      e.fan_wings = m;
+
+                  }
+
+              });
+
+              fin.timers.start(function () {
+
+                  if (e.fan_is_on) {
+                      math.quat.rotate_eular(e.fan_wings.rotation, 0, 0, -6.3 * ((app.timer % 0.35) / 0.35));
+                      e.fan_wings.require_update = 1;
+                  }
+
+
+
+              }, 1 / 45);
+
+              return e;
+
           }
 
-          function setup_scene(objdata, mtldata) {
+          function setup_scene(objdata, mtldata,fanobj,fanmtl) {
               var g = ge.geometry.shapes.obj.parse(objdata, mtldata);
               g.scale_position_rotation(0.2, 0.2, 0.2, 0, 0, 0, 0, 0.017453292519943295 * 90, 0);
               // g.scale_position_rotation(2, 2, 2, 0, 0, 0, 0, 0, 0)
@@ -21313,165 +21308,173 @@ gl_FragColor=u_draw_color;
                   return m;
               };
 
+              console.log(objects);
+
+              var fan = load_fan(fanobj, fanmtl);
+
+              var sg = setup_signals();
+
+              fan.pos = [-48, -4, 14];
+              var ewave_params = math.vec3([0.6, 5.20, 0.15]);
+              var ewave_color = math.vec4(1, 1, 1, 1);
+
+
+              var swave_params = math.vec3([0.2, 5.20, 0.35]);
+              var swave_color = math.vec4(2, 0, 0, 1);
+
+              var signals = {};
+
+              signals.device1_fan_electric = sg.add_signal(objects["device1"].origin, fan.pos, ewave_params, ewave_color, 3);
+
+              signals.device1_fan_data = sg.add_signal(objects["device1"].origin, fan.pos, swave_params, swave_color, 0);
 
 
 
-              setup_fan(function (fan) {
-                  var sg = setup_signals();
+              signals.device2_tvwirelessswitch_electric = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, ewave_params, ewave_color, 3);
 
-                  fan.pos = [-48, -4, 14];
-                  var ewave_params = math.vec3([0.6, 5.20, 0.15]);
-                  var ewave_color = math.vec4(1, 1, 1, 1);
+              signals.device2_tvwirelessswitch_data = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, swave_params, swave_color, 0);
 
 
-                  var swave_params = math.vec3([0.2, 5.20, 0.35]);
-                  var swave_color = math.vec4(2, 0, 0, 1);
+              signals.device2_laptop_electric = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, ewave_params, ewave_color, 3);
 
-                  var signals = {};
-
-                  signals.device1_fan_electric = sg.add_signal(objects["device1"].origin, fan.pos, ewave_params, ewave_color, 3);
-
-                  signals.device1_fan_data = sg.add_signal(objects["device1"].origin, fan.pos, swave_params, swave_color, 0);
+              signals.device2_laptop_data = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, swave_params, swave_color, 0);
 
 
+              var battery_charged = math.vec4([4, 1, 3, 0]);
+              var battery_charging = math.vec4([0, 4, 3, 0]);
+              var battery_req_charge = math.vec4([0, 1, 3, 0]);
 
-                  signals.device2_tvwirelessswitch_electric = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, ewave_params, ewave_color, 3);
+              var tv_is_off = math.vec4([30, 1, 2, 0]);
+              var tv_is_on = math.vec4([8, 22, 1, 0]);
 
-                  signals.device2_tvwirelessswitch_data = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, swave_params, swave_color, 0);
-
-
-                  signals.device2_laptop_electric = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, ewave_params, ewave_color, 3);
-
-                  signals.device2_laptop_data = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, swave_params, swave_color, 0);
-
-
-                  var battery_charged = math.vec4([4, 1, 3, 0]);
-                  var battery_charging = math.vec4([0, 4, 3, 0]);
-                  var battery_req_charge = math.vec4([0, 1, 3, 0]);
-
-                  var tv_is_off = math.vec4([30, 1, 2, 0]);
-                  var tv_is_on = math.vec4([8, 22, 1, 0]);
-
-                  objects.laptop.bat = sprite_sheet.add({
-                      pos: [objects.laptop.origin[0] - 0, objects.laptop.origin[1], objects.laptop.origin[2] + 1],
-                  });
-
-
-
-
-
-                  objects.tvwirelessswitch.bat = sprite_sheet.add({
-                      pos: [objects.tvwirelessswitch.origin[0] - 0.25, objects.tvwirelessswitch.origin[1] - 0.5, objects.tvwirelessswitch.origin[2] + 1],
-
-                  });
+              objects.laptop.bat = sprite_sheet.add({
+                  pos: [objects.laptop.origin[0] - 0, objects.laptop.origin[1], objects.laptop.origin[2] + 1],
+              });
 
 
 
 
-                  fan.bat = sprite_sheet.add({
-                      pos: [fan.pos[0], fan.pos[1] - 2, fan.pos[2]],
 
-                  });
-                  console.log('fan.transform.pos', fan.transform.pos);
-
-
-
-                  objects.tv.screen = sprite_sheet.add({
-                      pos: [objects.tv.origin[0], objects.tv.origin[1] + 0.2, objects.tv.origin[2]],
-
-                  });
-
-                  objects.tv.screen.scale = [10, 6, 1];
-
-
-
-                  function default_state() {
-                      objects.tv.screen.sheet_anim_params = tv_is_off;
-                      fan.fan_is_on = false;
-                      objects.laptop.bat.sheet_anim_params = battery_charged;
-                      objects.tvwirelessswitch.bat.sheet_anim_params = battery_charged;
-                      fan.bat.sheet_anim_params = battery_charged;
-
-                      signals.device1_fan_electric.enabled = false;
-                      signals.device1_fan_data.enabled = false;
-                      signals.device2_tvwirelessswitch_electric.enabled = false;
-                      signals.device2_tvwirelessswitch_data.enabled = false;
-                      signals.device2_laptop_electric.enabled = false;
-                      signals.device2_laptop_data.enabled = false;
-                  }
-
-                  var dv = html.elm$(`<div style="position:absolute;right:5px;top:5px;font-size:150%;background-color:silver">
- <label>Idle Mode&nbsp;<input id="modeidle" name="modes" type="radio" checked="checked" /></label><br/>
-<label>Data Mode&nbsp;<input id="modedata" name="modes" type="radio"/></label><br/>
-<label>Power Mode&nbsp;<input  id="modepower" name="modes" type="radio"/></label>
-    </div>`);
-
-                  document.body.appendChild(dv);
-
-
-                  dv.querySelector('#modeidle').oninput = function () {
-                      default_state();
-                  };
-
-
-                  dv.querySelector('#modedata').oninput = function () {
-                      default_state();
-                      objects.tv.screen.sheet_anim_params = tv_is_on;
-                      fan.fan_is_on = true;
-
-                      signals.device1_fan_data.enabled = true;
-                      signals.device2_tvwirelessswitch_data.enabled = true;
-
-                      objects.laptop.bat.sheet_anim_params = battery_req_charge;
-                      objects.tvwirelessswitch.bat.sheet_anim_params = battery_req_charge;
-                      fan.bat.sheet_anim_params = battery_req_charge;
-                  };
-
-
-                  dv.querySelector('#modepower').oninput = function () {
-                      default_state();
-                      signals.device1_fan_electric.enabled = true;
-                      signals.device2_tvwirelessswitch_electric.enabled = true;
-                      signals.device2_laptop_electric.enabled = true;
-
-                      objects.laptop.bat.sheet_anim_params = battery_charging;
-                      objects.tvwirelessswitch.bat.sheet_anim_params = battery_charging;
-                      fan.bat.sheet_anim_params = battery_charging;
-
-                  };
-
-
-                  default_state();
-                  setTimeout(function () {
-
-
-
-
-                  }, 200);
+              objects.tvwirelessswitch.bat = sprite_sheet.add({
+                  pos: [objects.tvwirelessswitch.origin[0] - 0.25, objects.tvwirelessswitch.origin[1] - 0.5, objects.tvwirelessswitch.origin[2] + 1],
 
               });
 
 
 
-              console.log(objects);
+
+              fan.bat = sprite_sheet.add({
+                  pos: [fan.pos[0], fan.pos[1] - 2, fan.pos[2]],
+
+              });
+              console.log('fan.transform.pos', fan.transform.pos);
+
+
+
+              objects.tv.screen = sprite_sheet.add({
+                  pos: [objects.tv.origin[0], objects.tv.origin[1] + 0.2, objects.tv.origin[2]],
+
+              });
+
+              objects.tv.screen.scale = [10, 6, 1];
+
+
+
+              function default_state() {
+                  objects.tv.screen.sheet_anim_params = tv_is_off;
+                  fan.fan_is_on = false;
+                  objects.laptop.bat.sheet_anim_params = battery_charged;
+                  objects.tvwirelessswitch.bat.sheet_anim_params = battery_charged;
+                  fan.bat.sheet_anim_params = battery_charged;
+
+                  signals.device1_fan_electric.enabled = false;
+                  signals.device1_fan_data.enabled = false;
+                  signals.device2_tvwirelessswitch_electric.enabled = false;
+                  signals.device2_tvwirelessswitch_data.enabled = false;
+                  signals.device2_laptop_electric.enabled = false;
+                  signals.device2_laptop_data.enabled = false;
+              }
+
+              var dv = html.elm$(`<div style="position:absolute;right:5px;top:5px;font-size:250%;background-color:silver">
+ <label>Idle Mode&nbsp;<input id="modeidle" name="modes" type="radio" checked="checked" /></label><br/>
+<label>Data Mode&nbsp;<input id="modedata" name="modes" type="radio"/></label><br/>
+<label>Power Mode&nbsp;<input  id="modepower" name="modes" type="radio"/></label>
+    </div>`);
+
+              document.body.appendChild(dv);
+
+
+              dv.querySelector('#modeidle').oninput = function () {
+                  default_state();
+              };
+
+
+              dv.querySelector('#modedata').oninput = function () {
+                  default_state();
+                  objects.tv.screen.sheet_anim_params = tv_is_on;
+                  fan.fan_is_on = true;
+
+                  signals.device1_fan_data.enabled = true;
+                  signals.device2_tvwirelessswitch_data.enabled = true;
+
+                  objects.laptop.bat.sheet_anim_params = battery_req_charge;
+                  objects.tvwirelessswitch.bat.sheet_anim_params = battery_req_charge;
+                  fan.bat.sheet_anim_params = battery_req_charge;
+              };
+
+
+              dv.querySelector('#modepower').oninput = function () {
+                  default_state();
+                  signals.device1_fan_electric.enabled = true;
+                  signals.device2_tvwirelessswitch_electric.enabled = true;
+                  signals.device2_laptop_electric.enabled = true;
+
+                  objects.laptop.bat.sheet_anim_params = battery_charging;
+                  objects.tvwirelessswitch.bat.sheet_anim_params = battery_charging;
+                  fan.bat.sheet_anim_params = battery_charging;
+
+              };
+
+
+              default_state();
+
+
+
+              
 
           }
 
-        
+          function load_objs(){
+              fin.urls_loader([["wireless-system.obj"], ["wireless-system.mtl"], ["f4.obj"], ["f4.mtl"]], function (datas) {
 
-          fin.url_loader("wireless-system.zip", function (data) {
+                  setup_scene(datas[0], datas[1], datas[2], datas[3]);
+                  
 
-              unpack_zip(data, function (zip) {
-
-                  setup_scene(zip["wireless-system.obj"], zip["wireless-system.mtl"]);
-
-              }, {
-                  "wireless-system.obj": "string",
-                  "wireless-system.mtl": "string"});
-
-          }, "arraybuffer");
+              });
+          }
 
 
+          function load_zip() {
+              fin.url_loader("wireless-system.zip", function (data) {
+
+                  unpack_zip(data, function (zip) {
+
+                      setup_scene(zip["wireless-system.obj"], zip["wireless-system.mtl"]
+                          , zip["f4.obj"], zip["f4.mtl"]
+                      );
+
+                  }, {
+                      "wireless-system.obj": "string",
+                      "wireless-system.mtl": "string",
+                      "f4.obj": "string",
+                      "f4.mtl": "string"
+                  });
+
+              }, "arraybuffer");
+          }
+          
+          //load_objs();
+          load_zip();
 
 
           app.start(function () {
