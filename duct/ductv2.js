@@ -3077,7 +3077,7 @@ _FM["ge"]=new Object();
   
 
   
-  Object.assign(this,{"SHADING":{"FLAT":2,"SHADED":4,"POST_SHADING":8,"RECEIVE_SHADOW":16,"CAST_SHADOW":32,"RECEIVE_REFLECTION":64,"TRANSPARENT":128,"OPUQUE":256,"DEPTH_TEST":512,"NO_DEPTH_TEST":1024,"DOUBLE_SIDES":2048,"SHADOW_DOUBLE_SIDES":4096},"DISPLAY_ALWAYS":2,"ITEM_TYPES":{"MESH":4,"LIGHT":8,"CAMERA":16,"MANIPULATOR":32,"OTHER":1024},"PICKABLE_MESH":2048,"TRANS":{"SCALABLE":2,"ANIMATED":4,"ANIMATED_POSITION":8,"ANIMATED_SCALE":16,"ANIMATED_ROTATION":32,"IK_ANIMATED":64},"GL_ACTIVE_ATTRIBUTES":35721,"GL_ACTIVE_TEXTURE":34016,"GL_ACTIVE_UNIFORMS":35718,"GL_ALIASED_LINE_WIDTH_RANGE":33902,"GL_ALIASED_POINT_SIZE_RANGE":33901,"GL_ALPHA":6406,"GL_ALPHA_BITS":3413,"GL_ALWAYS":519,"GL_ARRAY_BUFFER":34962,"GL_ARRAY_BUFFER_BINDING":34964,"GL_ATTACHED_SHADERS":35717,"GL_BACK":1029,"GL_BLEND":3042,"GL_BLEND_COLOR":32773,"GL_BLEND_DST_ALPHA":32970,"GL_BLEND_DST_RGB":32968,"GL_BLEND_EQUATION":32777,"GL_BLEND_EQUATION_ALPHA":34877,"GL_BLEND_EQUATION_RGB":32777,"GL_BLEND_SRC_ALPHA":32971,"GL_BLEND_SRC_RGB":32969,"GL_BLUE_BITS":3412,"GL_BOOL":35670,"GL_BOOL_VEC2":35671,"GL_BOOL_VEC3":35672,"GL_BOOL_VEC4":35673,"GL_BROWSER_DEFAULT_WEBGL":37444,"GL_BUFFER_SIZE":34660,"GL_BUFFER_USAGE":34661,"GL_BYTE":5120,"GL_CCW":2305,"GL_CLAMP_TO_EDGE":33071,"GL_COLOR_ATTACHMENT0":36064,"GL_COLOR_BUFFER_BIT":16384,"GL_COLOR_CLEAR_VALUE":3106,"GL_COLOR_WRITEMASK":3107,"GL_COMPILE_STATUS":35713,"GL_COMPRESSED_TEXTURE_FORMATS":34467,"GL_CONSTANT_ALPHA":32771,"GL_CONSTANT_COLOR":32769,"GL_CONTEXT_LOST_WEBGL":37442,"GL_CULL_FACE":2884,"GL_CULL_FACE_MODE":2885,"GL_CURRENT_PROGRAM":35725,"GL_CURRENT_VERTEX_ATTRIB":34342,"GL_CW":2304,"GL_DECR":7683,"GL_DECR_WRAP":34056,"GL_DELETE_STATUS":35712,"GL_DEPTH_ATTACHMENT":36096,"GL_DEPTH_BITS":3414,"GL_DEPTH_BUFFER_BIT":256,"GL_DEPTH_CLEAR_VALUE":2931,"GL_DEPTH_COMPONENT":6402,"GL_DEPTH_COMPONENT16":33189,"GL_DEPTH_FUNC":2932,"GL_DEPTH_RANGE":2928,"GL_DEPTH_STENCIL":34041,"GL_DEPTH_STENCIL_ATTACHMENT":33306,"GL_DEPTH_TEST":2929,"GL_DEPTH_WRITEMASK":2930,"GL_DITHER":3024,"GL_DONT_CARE":4352,"GL_DST_ALPHA":772,"GL_DST_COLOR":774,"GL_DYNAMIC_DRAW":35048,"GL_ELEMENT_ARRAY_BUFFER":34963,"GL_ELEMENT_ARRAY_BUFFER_BINDING":34965,"GL_EQUAL":514,"GL_FASTEST":4353,"GL_FLOAT":5126,"GL_FLOAT_MAT2":35674,"GL_FLOAT_MAT3":35675,"GL_FLOAT_MAT4":35676,"GL_FLOAT_VEC2":35664,"GL_FLOAT_VEC3":35665,"GL_FLOAT_VEC4":35666,"GL_FRAGMENT_SHADER":35632,"GL_FRAMEBUFFER":36160,"GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME":36049,"GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE":36048,"GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE":36051,"GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL":36050,"GL_FRAMEBUFFER_BINDING":36006,"GL_FRAMEBUFFER_COMPLETE":36053,"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT":36054,"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS":36057,"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT":36055,"GL_FRAMEBUFFER_UNSUPPORTED":36061,"GL_FRONT":1028,"GL_FRONT_AND_BACK":1032,"GL_FRONT_FACE":2886,"GL_FUNC_ADD":32774,"GL_FUNC_REVERSE_SUBTRACT":32779,"GL_FUNC_SUBTRACT":32778,"GL_GENERATE_MIPMAP_HINT":33170,"GL_GEQUAL":518,"GL_GREATER":516,"GL_GREEN_BITS":3411,"GL_HIGH_FLOAT":36338,"GL_HIGH_INT":36341,"GL_IMPLEMENTATION_COLOR_READ_FORMAT":35739,"GL_IMPLEMENTATION_COLOR_READ_TYPE":35738,"GL_INCR":7682,"GL_INCR_WRAP":34055,"GL_INT":5124,"GL_INT_VEC2":35667,"GL_INT_VEC3":35668,"GL_INT_VEC4":35669,"GL_INVALID_ENUM":1280,"GL_INVALID_FRAMEBUFFER_OPERATION":1286,"GL_INVALID_OPERATION":1282,"GL_INVALID_VALUE":1281,"GL_INVERT":5386,"GL_KEEP":7680,"GL_LEQUAL":515,"GL_LESS":513,"GL_LINEAR":9729,"GL_LINEAR_MIPMAP_LINEAR":9987,"GL_LINEAR_MIPMAP_NEAREST":9985,"GL_LINES":1,"GL_LINE_LOOP":2,"GL_LINE_STRIP":3,"GL_LINE_WIDTH":2849,"GL_LINK_STATUS":35714,"GL_LOW_FLOAT":36336,"GL_LOW_INT":36339,"GL_LUMINANCE":6409,"GL_LUMINANCE_ALPHA":6410,"GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS":35661,"GL_MAX_CUBE_MAP_TEXTURE_SIZE":34076,"GL_MAX_FRAGMENT_UNIFORM_VECTORS":36349,"GL_MAX_RENDERBUFFER_SIZE":34024,"GL_MAX_TEXTURE_IMAGE_UNITS":34930,"GL_MAX_TEXTURE_SIZE":3379,"GL_MAX_VARYING_VECTORS":36348,"GL_MAX_VERTEX_ATTRIBS":34921,"GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS":35660,"GL_MAX_VERTEX_UNIFORM_VECTORS":36347,"GL_MAX_VIEWPORT_DIMS":3386,"GL_MEDIUM_FLOAT":36337,"GL_MEDIUM_INT":36340,"GL_MIRRORED_REPEAT":33648,"GL_NEAREST":9728,"GL_NEAREST_MIPMAP_LINEAR":9986,"GL_NEAREST_MIPMAP_NEAREST":9984,"GL_NEVER":512,"GL_NICEST":4354,"GL_NONE":0,"GL_NOTEQUAL":517,"GL_NO_ERROR":0,"GL_ONE":1,"GL_ONE_MINUS_CONSTANT_ALPHA":32772,"GL_ONE_MINUS_CONSTANT_COLOR":32770,"GL_ONE_MINUS_DST_ALPHA":773,"GL_ONE_MINUS_DST_COLOR":775,"GL_ONE_MINUS_SRC_ALPHA":771,"GL_ONE_MINUS_SRC_COLOR":769,"GL_OUT_OF_MEMORY":1285,"GL_PACK_ALIGNMENT":3333,"GL_POINTS":0,"GL_POLYGON_OFFSET_FACTOR":32824,"GL_POLYGON_OFFSET_FILL":32823,"GL_POLYGON_OFFSET_UNITS":10752,"GL_RED_BITS":3410,"GL_RENDERBUFFER":36161,"GL_RENDERBUFFER_ALPHA_SIZE":36179,"GL_RENDERBUFFER_BINDING":36007,"GL_RENDERBUFFER_BLUE_SIZE":36178,"GL_RENDERBUFFER_DEPTH_SIZE":36180,"GL_RENDERBUFFER_GREEN_SIZE":36177,"GL_RENDERBUFFER_HEIGHT":36163,"GL_RENDERBUFFER_INTERNAL_FORMAT":36164,"GL_RENDERBUFFER_RED_SIZE":36176,"GL_RENDERBUFFER_STENCIL_SIZE":36181,"GL_RENDERBUFFER_WIDTH":36162,"GL_RENDERER":7937,"GL_REPEAT":10497,"GL_REPLACE":7681,"GL_RGB":6407,"GL_RGB5_A1":32855,"GL_RGB565":36194,"GL_RGBA":6408,"GL_RGBA4":32854,"GL_SAMPLER_2D":35678,"GL_SAMPLER_CUBE":35680,"GL_SAMPLES":32937,"GL_SAMPLE_ALPHA_TO_COVERAGE":32926,"GL_SAMPLE_BUFFERS":32936,"GL_SAMPLE_COVERAGE":32928,"GL_SAMPLE_COVERAGE_INVERT":32939,"GL_SAMPLE_COVERAGE_VALUE":32938,"GL_SCISSOR_BOX":3088,"GL_SCISSOR_TEST":3089,"GL_SHADER_TYPE":35663,"GL_SHADING_LANGUAGE_VERSION":35724,"GL_SHORT":5122,"GL_SRC_ALPHA":770,"GL_SRC_ALPHA_SATURATE":776,"GL_SRC_COLOR":768,"GL_STATIC_DRAW":35044,"GL_STENCIL_ATTACHMENT":36128,"GL_STENCIL_BACK_FAIL":34817,"GL_STENCIL_BACK_FUNC":34816,"GL_STENCIL_BACK_PASS_DEPTH_FAIL":34818,"GL_STENCIL_BACK_PASS_DEPTH_PASS":34819,"GL_STENCIL_BACK_REF":36003,"GL_STENCIL_BACK_VALUE_MASK":36004,"GL_STENCIL_BACK_WRITEMASK":36005,"GL_STENCIL_BITS":3415,"GL_STENCIL_BUFFER_BIT":1024,"GL_STENCIL_CLEAR_VALUE":2961,"GL_STENCIL_FAIL":2964,"GL_STENCIL_FUNC":2962,"GL_STENCIL_INDEX8":36168,"GL_STENCIL_PASS_DEPTH_FAIL":2965,"GL_STENCIL_PASS_DEPTH_PASS":2966,"GL_STENCIL_REF":2967,"GL_STENCIL_TEST":2960,"GL_STENCIL_VALUE_MASK":2963,"GL_STENCIL_WRITEMASK":2968,"GL_STREAM_DRAW":35040,"GL_SUBPIXEL_BITS":3408,"GL_TEXTURE":5890,"GL_TEXTURE0":33984,"GL_TEXTURE1":33985,"GL_TEXTURE2":33986,"GL_TEXTURE3":33987,"GL_TEXTURE4":33988,"GL_TEXTURE5":33989,"GL_TEXTURE6":33990,"GL_TEXTURE7":33991,"GL_TEXTURE8":33992,"GL_TEXTURE9":33993,"GL_TEXTURE10":33994,"GL_TEXTURE11":33995,"GL_TEXTURE12":33996,"GL_TEXTURE13":33997,"GL_TEXTURE14":33998,"GL_TEXTURE15":33999,"GL_TEXTURE16":34000,"GL_TEXTURE17":34001,"GL_TEXTURE18":34002,"GL_TEXTURE19":34003,"GL_TEXTURE20":34004,"GL_TEXTURE21":34005,"GL_TEXTURE22":34006,"GL_TEXTURE23":34007,"GL_TEXTURE24":34008,"GL_TEXTURE25":34009,"GL_TEXTURE26":34010,"GL_TEXTURE27":34011,"GL_TEXTURE28":34012,"GL_TEXTURE29":34013,"GL_TEXTURE30":34014,"GL_TEXTURE31":34015,"GL_TEXTURE_2D":3553,"GL_TEXTURE_BINDING_2D":32873,"GL_TEXTURE_BINDING_CUBE_MAP":34068,"GL_TEXTURE_CUBE_MAP":34067,"GL_TEXTURE_CUBE_MAP_NEGATIVE_X":34070,"GL_TEXTURE_CUBE_MAP_NEGATIVE_Y":34072,"GL_TEXTURE_CUBE_MAP_NEGATIVE_Z":34074,"GL_TEXTURE_CUBE_MAP_POSITIVE_X":34069,"GL_TEXTURE_CUBE_MAP_POSITIVE_Y":34071,"GL_TEXTURE_CUBE_MAP_POSITIVE_Z":34073,"GL_TEXTURE_MAG_FILTER":10240,"GL_TEXTURE_MIN_FILTER":10241,"GL_TEXTURE_WRAP_S":10242,"GL_TEXTURE_WRAP_T":10243,"GL_TRIANGLES":4,"GL_TRIANGLE_FAN":6,"GL_TRIANGLE_STRIP":5,"GL_UNPACK_ALIGNMENT":3317,"GL_UNPACK_COLORSPACE_CONVERSION_WEBGL":37443,"GL_UNPACK_FLIP_Y_WEBGL":37440,"GL_UNPACK_PREMULTIPLY_ALPHA_WEBGL":37441,"GL_UNSIGNED_BYTE":5121,"GL_UNSIGNED_INT":5125,"GL_UNSIGNED_SHORT":5123,"GL_UNSIGNED_SHORT_4_4_4_4":32819,"GL_UNSIGNED_SHORT_5_5_5_1":32820,"GL_UNSIGNED_SHORT_5_6_5":33635,"GL_VALIDATE_STATUS":35715,"GL_VENDOR":7936,"GL_VERSION":7938,"GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING":34975,"GL_VERTEX_ATTRIB_ARRAY_ENABLED":34338,"GL_VERTEX_ATTRIB_ARRAY_NORMALIZED":34922,"GL_VERTEX_ATTRIB_ARRAY_POINTER":34373,"GL_VERTEX_ATTRIB_ARRAY_SIZE":34339,"GL_VERTEX_ATTRIB_ARRAY_STRIDE":34340,"GL_VERTEX_ATTRIB_ARRAY_TYPE":34341,"GL_VERTEX_SHADER":35633,"GL_VIEWPORT":2978,"GL_ZERO":0});
+  Object.assign(this,{"SHADING":{"FLAT":2,"SHADED":4,"POST_SHADING":8,"RECEIVE_SHADOW":16,"CAST_SHADOW":32,"RECEIVE_REFLECTION":64,"TRANSPARENT":128,"OPUQUE":256,"DEPTH_TEST":512,"NO_DEPTH_TEST":1024,"DOUBLE_SIDES":2048,"SHADOW_DOUBLE_SIDES":4096,"RENDER_TARGET2":8192},"DISPLAY_ALWAYS":2,"ITEM_TYPES":{"MESH":4,"LIGHT":8,"CAMERA":16,"MANIPULATOR":32,"OTHER":1024},"PICKABLE_MESH":2048,"TRANS":{"SCALABLE":2,"ANIMATED":4,"ANIMATED_POSITION":8,"ANIMATED_SCALE":16,"ANIMATED_ROTATION":32,"IK_ANIMATED":64},"GL_ACTIVE_ATTRIBUTES":35721,"GL_ACTIVE_TEXTURE":34016,"GL_ACTIVE_UNIFORMS":35718,"GL_ALIASED_LINE_WIDTH_RANGE":33902,"GL_ALIASED_POINT_SIZE_RANGE":33901,"GL_ALPHA":6406,"GL_ALPHA_BITS":3413,"GL_ALWAYS":519,"GL_ARRAY_BUFFER":34962,"GL_ARRAY_BUFFER_BINDING":34964,"GL_ATTACHED_SHADERS":35717,"GL_BACK":1029,"GL_BLEND":3042,"GL_BLEND_COLOR":32773,"GL_BLEND_DST_ALPHA":32970,"GL_BLEND_DST_RGB":32968,"GL_BLEND_EQUATION":32777,"GL_BLEND_EQUATION_ALPHA":34877,"GL_BLEND_EQUATION_RGB":32777,"GL_BLEND_SRC_ALPHA":32971,"GL_BLEND_SRC_RGB":32969,"GL_BLUE_BITS":3412,"GL_BOOL":35670,"GL_BOOL_VEC2":35671,"GL_BOOL_VEC3":35672,"GL_BOOL_VEC4":35673,"GL_BROWSER_DEFAULT_WEBGL":37444,"GL_BUFFER_SIZE":34660,"GL_BUFFER_USAGE":34661,"GL_BYTE":5120,"GL_CCW":2305,"GL_CLAMP_TO_EDGE":33071,"GL_COLOR_ATTACHMENT0":36064,"GL_COLOR_BUFFER_BIT":16384,"GL_COLOR_CLEAR_VALUE":3106,"GL_COLOR_WRITEMASK":3107,"GL_COMPILE_STATUS":35713,"GL_COMPRESSED_TEXTURE_FORMATS":34467,"GL_CONSTANT_ALPHA":32771,"GL_CONSTANT_COLOR":32769,"GL_CONTEXT_LOST_WEBGL":37442,"GL_CULL_FACE":2884,"GL_CULL_FACE_MODE":2885,"GL_CURRENT_PROGRAM":35725,"GL_CURRENT_VERTEX_ATTRIB":34342,"GL_CW":2304,"GL_DECR":7683,"GL_DECR_WRAP":34056,"GL_DELETE_STATUS":35712,"GL_DEPTH_ATTACHMENT":36096,"GL_DEPTH_BITS":3414,"GL_DEPTH_BUFFER_BIT":256,"GL_DEPTH_CLEAR_VALUE":2931,"GL_DEPTH_COMPONENT":6402,"GL_DEPTH_COMPONENT16":33189,"GL_DEPTH_FUNC":2932,"GL_DEPTH_RANGE":2928,"GL_DEPTH_STENCIL":34041,"GL_DEPTH_STENCIL_ATTACHMENT":33306,"GL_DEPTH_TEST":2929,"GL_DEPTH_WRITEMASK":2930,"GL_DITHER":3024,"GL_DONT_CARE":4352,"GL_DST_ALPHA":772,"GL_DST_COLOR":774,"GL_DYNAMIC_DRAW":35048,"GL_ELEMENT_ARRAY_BUFFER":34963,"GL_ELEMENT_ARRAY_BUFFER_BINDING":34965,"GL_EQUAL":514,"GL_FASTEST":4353,"GL_FLOAT":5126,"GL_FLOAT_MAT2":35674,"GL_FLOAT_MAT3":35675,"GL_FLOAT_MAT4":35676,"GL_FLOAT_VEC2":35664,"GL_FLOAT_VEC3":35665,"GL_FLOAT_VEC4":35666,"GL_FRAGMENT_SHADER":35632,"GL_FRAMEBUFFER":36160,"GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME":36049,"GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE":36048,"GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE":36051,"GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL":36050,"GL_FRAMEBUFFER_BINDING":36006,"GL_FRAMEBUFFER_COMPLETE":36053,"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT":36054,"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS":36057,"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT":36055,"GL_FRAMEBUFFER_UNSUPPORTED":36061,"GL_FRONT":1028,"GL_FRONT_AND_BACK":1032,"GL_FRONT_FACE":2886,"GL_FUNC_ADD":32774,"GL_FUNC_REVERSE_SUBTRACT":32779,"GL_FUNC_SUBTRACT":32778,"GL_GENERATE_MIPMAP_HINT":33170,"GL_GEQUAL":518,"GL_GREATER":516,"GL_GREEN_BITS":3411,"GL_HIGH_FLOAT":36338,"GL_HIGH_INT":36341,"GL_IMPLEMENTATION_COLOR_READ_FORMAT":35739,"GL_IMPLEMENTATION_COLOR_READ_TYPE":35738,"GL_INCR":7682,"GL_INCR_WRAP":34055,"GL_INT":5124,"GL_INT_VEC2":35667,"GL_INT_VEC3":35668,"GL_INT_VEC4":35669,"GL_INVALID_ENUM":1280,"GL_INVALID_FRAMEBUFFER_OPERATION":1286,"GL_INVALID_OPERATION":1282,"GL_INVALID_VALUE":1281,"GL_INVERT":5386,"GL_KEEP":7680,"GL_LEQUAL":515,"GL_LESS":513,"GL_LINEAR":9729,"GL_LINEAR_MIPMAP_LINEAR":9987,"GL_LINEAR_MIPMAP_NEAREST":9985,"GL_LINES":1,"GL_LINE_LOOP":2,"GL_LINE_STRIP":3,"GL_LINE_WIDTH":2849,"GL_LINK_STATUS":35714,"GL_LOW_FLOAT":36336,"GL_LOW_INT":36339,"GL_LUMINANCE":6409,"GL_LUMINANCE_ALPHA":6410,"GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS":35661,"GL_MAX_CUBE_MAP_TEXTURE_SIZE":34076,"GL_MAX_FRAGMENT_UNIFORM_VECTORS":36349,"GL_MAX_RENDERBUFFER_SIZE":34024,"GL_MAX_TEXTURE_IMAGE_UNITS":34930,"GL_MAX_TEXTURE_SIZE":3379,"GL_MAX_VARYING_VECTORS":36348,"GL_MAX_VERTEX_ATTRIBS":34921,"GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS":35660,"GL_MAX_VERTEX_UNIFORM_VECTORS":36347,"GL_MAX_VIEWPORT_DIMS":3386,"GL_MEDIUM_FLOAT":36337,"GL_MEDIUM_INT":36340,"GL_MIRRORED_REPEAT":33648,"GL_NEAREST":9728,"GL_NEAREST_MIPMAP_LINEAR":9986,"GL_NEAREST_MIPMAP_NEAREST":9984,"GL_NEVER":512,"GL_NICEST":4354,"GL_NONE":0,"GL_NOTEQUAL":517,"GL_NO_ERROR":0,"GL_ONE":1,"GL_ONE_MINUS_CONSTANT_ALPHA":32772,"GL_ONE_MINUS_CONSTANT_COLOR":32770,"GL_ONE_MINUS_DST_ALPHA":773,"GL_ONE_MINUS_DST_COLOR":775,"GL_ONE_MINUS_SRC_ALPHA":771,"GL_ONE_MINUS_SRC_COLOR":769,"GL_OUT_OF_MEMORY":1285,"GL_PACK_ALIGNMENT":3333,"GL_POINTS":0,"GL_POLYGON_OFFSET_FACTOR":32824,"GL_POLYGON_OFFSET_FILL":32823,"GL_POLYGON_OFFSET_UNITS":10752,"GL_RED_BITS":3410,"GL_RENDERBUFFER":36161,"GL_RENDERBUFFER_ALPHA_SIZE":36179,"GL_RENDERBUFFER_BINDING":36007,"GL_RENDERBUFFER_BLUE_SIZE":36178,"GL_RENDERBUFFER_DEPTH_SIZE":36180,"GL_RENDERBUFFER_GREEN_SIZE":36177,"GL_RENDERBUFFER_HEIGHT":36163,"GL_RENDERBUFFER_INTERNAL_FORMAT":36164,"GL_RENDERBUFFER_RED_SIZE":36176,"GL_RENDERBUFFER_STENCIL_SIZE":36181,"GL_RENDERBUFFER_WIDTH":36162,"GL_RENDERER":7937,"GL_REPEAT":10497,"GL_REPLACE":7681,"GL_RGB":6407,"GL_RGB5_A1":32855,"GL_RGB565":36194,"GL_RGBA":6408,"GL_RGBA4":32854,"GL_SAMPLER_2D":35678,"GL_SAMPLER_CUBE":35680,"GL_SAMPLES":32937,"GL_SAMPLE_ALPHA_TO_COVERAGE":32926,"GL_SAMPLE_BUFFERS":32936,"GL_SAMPLE_COVERAGE":32928,"GL_SAMPLE_COVERAGE_INVERT":32939,"GL_SAMPLE_COVERAGE_VALUE":32938,"GL_SCISSOR_BOX":3088,"GL_SCISSOR_TEST":3089,"GL_SHADER_TYPE":35663,"GL_SHADING_LANGUAGE_VERSION":35724,"GL_SHORT":5122,"GL_SRC_ALPHA":770,"GL_SRC_ALPHA_SATURATE":776,"GL_SRC_COLOR":768,"GL_STATIC_DRAW":35044,"GL_STENCIL_ATTACHMENT":36128,"GL_STENCIL_BACK_FAIL":34817,"GL_STENCIL_BACK_FUNC":34816,"GL_STENCIL_BACK_PASS_DEPTH_FAIL":34818,"GL_STENCIL_BACK_PASS_DEPTH_PASS":34819,"GL_STENCIL_BACK_REF":36003,"GL_STENCIL_BACK_VALUE_MASK":36004,"GL_STENCIL_BACK_WRITEMASK":36005,"GL_STENCIL_BITS":3415,"GL_STENCIL_BUFFER_BIT":1024,"GL_STENCIL_CLEAR_VALUE":2961,"GL_STENCIL_FAIL":2964,"GL_STENCIL_FUNC":2962,"GL_STENCIL_INDEX8":36168,"GL_STENCIL_PASS_DEPTH_FAIL":2965,"GL_STENCIL_PASS_DEPTH_PASS":2966,"GL_STENCIL_REF":2967,"GL_STENCIL_TEST":2960,"GL_STENCIL_VALUE_MASK":2963,"GL_STENCIL_WRITEMASK":2968,"GL_STREAM_DRAW":35040,"GL_SUBPIXEL_BITS":3408,"GL_TEXTURE":5890,"GL_TEXTURE0":33984,"GL_TEXTURE1":33985,"GL_TEXTURE2":33986,"GL_TEXTURE3":33987,"GL_TEXTURE4":33988,"GL_TEXTURE5":33989,"GL_TEXTURE6":33990,"GL_TEXTURE7":33991,"GL_TEXTURE8":33992,"GL_TEXTURE9":33993,"GL_TEXTURE10":33994,"GL_TEXTURE11":33995,"GL_TEXTURE12":33996,"GL_TEXTURE13":33997,"GL_TEXTURE14":33998,"GL_TEXTURE15":33999,"GL_TEXTURE16":34000,"GL_TEXTURE17":34001,"GL_TEXTURE18":34002,"GL_TEXTURE19":34003,"GL_TEXTURE20":34004,"GL_TEXTURE21":34005,"GL_TEXTURE22":34006,"GL_TEXTURE23":34007,"GL_TEXTURE24":34008,"GL_TEXTURE25":34009,"GL_TEXTURE26":34010,"GL_TEXTURE27":34011,"GL_TEXTURE28":34012,"GL_TEXTURE29":34013,"GL_TEXTURE30":34014,"GL_TEXTURE31":34015,"GL_TEXTURE_2D":3553,"GL_TEXTURE_BINDING_2D":32873,"GL_TEXTURE_BINDING_CUBE_MAP":34068,"GL_TEXTURE_CUBE_MAP":34067,"GL_TEXTURE_CUBE_MAP_NEGATIVE_X":34070,"GL_TEXTURE_CUBE_MAP_NEGATIVE_Y":34072,"GL_TEXTURE_CUBE_MAP_NEGATIVE_Z":34074,"GL_TEXTURE_CUBE_MAP_POSITIVE_X":34069,"GL_TEXTURE_CUBE_MAP_POSITIVE_Y":34071,"GL_TEXTURE_CUBE_MAP_POSITIVE_Z":34073,"GL_TEXTURE_MAG_FILTER":10240,"GL_TEXTURE_MIN_FILTER":10241,"GL_TEXTURE_WRAP_S":10242,"GL_TEXTURE_WRAP_T":10243,"GL_TRIANGLES":4,"GL_TRIANGLE_FAN":6,"GL_TRIANGLE_STRIP":5,"GL_UNPACK_ALIGNMENT":3317,"GL_UNPACK_COLORSPACE_CONVERSION_WEBGL":37443,"GL_UNPACK_FLIP_Y_WEBGL":37440,"GL_UNPACK_PREMULTIPLY_ALPHA_WEBGL":37441,"GL_UNSIGNED_BYTE":5121,"GL_UNSIGNED_INT":5125,"GL_UNSIGNED_SHORT":5123,"GL_UNSIGNED_SHORT_4_4_4_4":32819,"GL_UNSIGNED_SHORT_5_5_5_1":32820,"GL_UNSIGNED_SHORT_5_6_5":33635,"GL_VALIDATE_STATUS":35715,"GL_VENDOR":7936,"GL_VERSION":7938,"GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING":34975,"GL_VERTEX_ATTRIB_ARRAY_ENABLED":34338,"GL_VERTEX_ATTRIB_ARRAY_NORMALIZED":34922,"GL_VERTEX_ATTRIB_ARRAY_POINTER":34373,"GL_VERTEX_ATTRIB_ARRAY_SIZE":34339,"GL_VERTEX_ATTRIB_ARRAY_STRIDE":34340,"GL_VERTEX_ATTRIB_ARRAY_TYPE":34341,"GL_VERTEX_SHADER":35633,"GL_VIEWPORT":2978,"GL_ZERO":0});
   
   this.module_export_code = function () {
 
@@ -3679,15 +3679,24 @@ _FM["ge"]=new Object();
 
     texture.load_images.onload = (function () {
       var canv = ge.create_canvas(1, 1);
+      var fit_w = 0, fit_h = 0;
       return function (img, tex) {
 
 
         if (tex.fit_size) {
-          canv.set_size(tex.fit_size, tex.fit_size);
-          canv.ctx.drawImage(img, 0, 0, tex.fit_size, tex.fit_size);
+          if (tex.fit_size.length > 0) {
+            fit_w = tex.fit_size[0];
+            fit_h = tex.fit_size[1];
+          }
+          else {
+            fit_w = tex.fit_size;
+            fit_h = tex.fit_size;
+          }
+          canv.set_size(fit_w, fit_h);
+          canv.ctx.drawImage(img, 0, 0, fit_w, fit_h);
           tex.source = canv._get_image_data().data;
-          tex.width = tex.fit_size;
-          tex.height = tex.fit_size;
+          tex.width = fit_w;
+          tex.height = fit_h;
           texture.load_images.free(img);
         }
         else {
@@ -4841,7 +4850,53 @@ void fragment(void) {
 	
 }
 
+
+
+/*chunk-sprite-sheet-uvs*/
+
+uniform float u_timer_rw;
+
+uniform vec3 u_view_sd;
+uniform vec3 u_view_up;
+
+uniform vec3 u_view_fw;
+
+uniform vec4 u_sheet_params;
+uniform vec4 u_sheet_anim_params;
+
+
+vec3 att_uv(void){
+//return vec3(a_uv_rw,1.0);
+
+vec2 tiles_size=u_sheet_params.zw;
+float title_start=u_sheet_anim_params.x;
+float titles_count=u_sheet_anim_params.y;
+float speed=u_sheet_anim_params.z;
+
+float tile_index=title_start+floor((mod(u_timer_rw,speed)/speed)*titles_count);
+
+float tiny=floor( tile_index/u_sheet_params.x);
+float tinx=floor( mod(tile_index ,u_sheet_params.y));
+
+
+
+return vec3((a_uv_rw.x*tiles_size.x)+(tiles_size.x*tinx),(a_uv_rw.y*tiles_size.y)+(tiles_size.y*tiny),1.0);
+
+}
+
+void vertex(){
+
+super_vertex();
+
+//gl_Position.xyz =  u_view_sd * v_position_rw.x  + u_view_up * v_position_rw.y ;
+
+//gl_Position=u_view_projection_rw*gl_Position;
+//
+}
+
 `);
+
+    
 
     ge.shading.material = ge.define(function (proto, _super) {
       function ge_material(def) {
@@ -4864,6 +4919,8 @@ void fragment(void) {
         math.vec3.copy(this.ambient, def.ambient || [0.5, 0.5, 0.5]);
         math.vec3.copy(this.diffuse, def.diffuse || [0.5, 0.5, 0.5]);
         math.vec3.copy(this.specular, def.specular || [0.863, 0.863, 0.863]);
+
+        
 
         this.ambient[3] = 1;
 
@@ -4915,6 +4972,10 @@ void fragment(void) {
         if (def.texture) {
           this.texture = def.texture;
         }
+        if (def.assign) {
+          Object.assign(this, def.assign);
+        }
+
       }
 
       ge_material.shader = ge.webgl.shader.parse(glsl["flat-material"]);
@@ -5036,6 +5097,102 @@ void fragment(void) {
         }
       })();
 
+
+      var sprite_sheet_render = function (renderer, shader, mesh) {
+        var uni;
+        uni = shader.uniforms["u_sheet_params"];
+      if (uni) {
+        uni.params[uni.params_length] = this.u_sheet_params;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        if (mesh.sheet_anim_params) {
+          uni = shader.uniforms["u_sheet_anim_params"];
+      if (uni) {
+        uni.params[uni.params_length] = mesh.sheet_anim_params;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        }
+        else {
+          uni = shader.uniforms["u_sheet_anim_params"];
+      if (uni) {
+        uni.params[uni.params_length] = this.u_sheet_anim_params;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        }
+        
+        
+      };
+
+      proto.build_sprite_sheet_shader = function (def) {
+
+        if (!this.shader.sprite_sheeet_uvs) {
+          this.shader = this.shader.extend(glsl["sprite-sheet-uvs"]);
+          this.shader.sprite_sheeet_uvs = true;
+          this.u_sheet_params = math.vec4(def.cols, def.rows, 1 / def.cols, 1 / def.rows);
+          if (def.anim_params) {
+            this.u_sheet_anim_params = math.vec4(def.anim_params);
+          }
+          else {
+            this.u_sheet_anim_params = math.vec4(0, def.cols * def.rows, 1, 0);
+          }
+         
+          this.on_before_render.add(sprite_sheet_render);
+        }
+        
+      }
+
+      proto.set_as_sprite_sheet = function (def) {
+
+        this.shader = this.shader.extend(`
+
+uniform float u_timer_rw;
+
+uniform vec3 u_view_sd;
+uniform vec3 u_view_up;
+
+uniform vec3 u_view_fw;
+
+float trows=5.0;
+float tcols=4.0;
+
+
+
+
+vec3 att_uv(void){
+vec2 tsize=vec2(1.0/tcols,1.0/trows);
+float total_tiles=tcols*trows;
+
+float tindex=floor((mod(u_timer_rw,1.0)/1.0)*total_tiles);
+
+vec2 uv=a_uv_rw;
+float tinx=floor( mod(tindex ,tcols));
+float tiny=floor( tindex/tcols);
+
+
+uv.x=(a_uv_rw.x*tsize.x)+(tsize.x*tinx);
+uv.y=-(a_uv_rw.y*tsize.y)+(tsize.y*tiny);
+
+
+
+    return vec3(uv,1.0);
+}
+
+void vertex(){
+
+super_vertex();
+
+gl_Position.xyz =  u_view_sd * v_position_rw.x  + u_view_up * v_position_rw.y ;
+
+gl_Position=u_view_projection_rw*gl_Position;
+}
+
+`)
+
+
+
+
+      }
+
       return ge_material;
     }, ge.flags_setting);
 
@@ -5067,6 +5224,8 @@ void fragment(void) {
         if (def.both_sides) {
          // this.flags += 2048;
         }
+
+
         return (this);
 
       }
@@ -11018,7 +11177,12 @@ void fragment(void) {
 
 
 
+  ge.geometry.shapes.point = new ge.geometry.geometry_data();
 
+  ge.geometry.shapes.point.add_attribute('a_position_rw', {
+    item_size: 3, data: new Float32Array(3)
+  });
+  ge.geometry.shapes.flat_quad.num_items = 1;
 
 
 
@@ -11134,6 +11298,7 @@ void fragment(void) {
 
     return ge_mesh_triangle;
   }, ge.renderable);
+
 
 
 }})()(_FM["fin"],_FM["ge"],_FM["math"]);
@@ -12182,7 +12347,7 @@ void vertex()
 {
 gl_Position = vec4((a_position_rw.xy*u_pos_size.zw)+u_pos_size.xy,0.0,1.0);	
 	v_uv_rw = a_position_rw.xy*madd+madd;  
-	v_uv_rw.y=1.0-v_uv_rw.y;
+	v_uv_rw.y=v_uv_rw.y;
 
 
 }
@@ -12341,7 +12506,7 @@ gl_FragColor = vec4((get_shadow_sample()));
       }
 
     };
-    proto.gl_bindFramebuffer2 = function (mode,param) {
+    proto.gl_bindFramebuffer = function (mode,param) {
       if (param !== this.gl_states.framebuffer) {
         this.gl_states.framebuffer = param;     
         this.gl.bindFramebuffer(mode,param);
@@ -13615,9 +13780,18 @@ gl_FragColor = vec4((get_shadow_sample()));
       renderer.use_geometry(mesh.geometry);
       mesh.material.render_mesh(renderer, shader, mesh);
     }
-
+    var render_target2_meshes = new fin.array();
+    var render_events = [null,null, null, null, null, null]
     proto.render_scene = function (camera, flat_meshes, opuque_meshes, transparent_meshes, lights) {
       if (this.has_error !== this.gl.NO_ERROR) { return; }
+
+      render_events[0] = this;
+      render_events[1] = camera;
+      render_events[2] = flat_meshes;
+      render_events[3] = opuque_meshes;
+      render_events[4] = transparent_meshes;
+      render_events[5] = lights;
+
 
       this.last_shader_id = -1;
       this.render_target_id = -1;
@@ -13648,6 +13822,8 @@ gl_FragColor = vec4((get_shadow_sample()));
         renderer.gl_depthMask(true);
         renderer.fw_rendering_mode = false;
       }
+
+      this.render_event1.trigger(render_events);
 
       if (opuque_meshes.length > 0) {
         //begin render lighting
@@ -13758,7 +13934,12 @@ update_shading_lights = this.lights_batch_size === this.fws_num_lights || li ===
       }
           renderer.use_geometry(mesh.geometry);
       mesh.material.render_mesh(renderer, shader, mesh);
-          
+
+          if (mesh.flags & 8192) {
+            render_target2_meshes.push(mesh);
+          }
+
+
         }
         this.lights_batch_size = 0;this.light_pass_count++;
 if (lights.length > this.fws_num_lights) {
@@ -13785,6 +13966,7 @@ if (lights.length > this.fws_num_lights) {
       // flat_meshes
 
 
+      this.render_event2.trigger(render_events);
       for (i = 0; i < flat_meshes.length; i++) {
         mesh = flat_meshes[i];
         if (renderer.use_shader(mesh.material.shader)) {          
@@ -13824,7 +14006,8 @@ if (lights.length > this.fws_num_lights) {
         uni.func.apply(shader.gl, uni.params);
       }
         renderer.use_geometry(mesh.geometry);
-      mesh.material.render_mesh(renderer, shader, mesh);  
+      mesh.material.render_mesh(renderer, shader, mesh);
+       
       }
 
       
@@ -13838,12 +14021,71 @@ if (lights.length > this.fws_num_lights) {
 
       }
 
+      this.render_event3.trigger(render_events);
+      /*
+      this.render_target2.bind();
+      renderer.gl.clear(16384);
+      //enable forward rendering
+      renderer.gl_blendFunc(1, 1);
+      if (!renderer.fw_rendering_mode) {
+        renderer.gl_enable(3042);
+        renderer.gl_depthMask(false);
+        renderer.gl_depthFunc(514);
+        renderer.fw_rendering_mode = true;
+      }
+      for (i = 0; i < render_target2_meshes.length; i++) {
+        mesh = render_target2_meshes.data[i];
+        if (renderer.use_shader(mesh.material.shader)) {
+          shader = renderer.active_shader;
+          if (shader.camera_version !== camera.version) {
+        shader.camera_version = camera.version;
+        uni = shader.uniforms["u_view_projection_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_projection;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_inverse;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_fw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.fw_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_sd"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.sd_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_up"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.up_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+      }
+        }
+        uni = shader.uniforms["u_model_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = mesh.matrix_world;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        renderer.use_geometry(mesh.geometry);
+      mesh.material.render_mesh(renderer, shader, mesh);
 
 
+      }
+      this.render_target3.bind();
 
-     
+      renderer.gl.clear(16384);
+
+      this.draw_textured_quad(this.render_target2.color_texture, 0, 0, 1,1);
+
+*/
 
       if (transparent_meshes.length > 0) {
+        renderer.set_default_viewport();
         //disable forward rendering
       if (renderer.fw_rendering_mode) {
         renderer.gl_disable(3042);
@@ -13854,7 +14096,7 @@ if (lights.length > this.fws_num_lights) {
 
         for (i = 0; i < transparent_meshes.length; i++) {
           mesh = transparent_meshes[i];
-
+         
           if (mesh.material.flags & 4) {
             if (renderer.light_pass_count >= mesh.material.light_pass_limit) continue;
             this.light_pass_count = 0;this.lights_batch_size = 0;
@@ -14034,10 +14276,12 @@ if (lights.length > this.fws_num_lights) {
         }
       }
 
+
       
 
+      this.render_event4.trigger(render_events);
 
-
+     
       //disable forward rendering
       //disable forward rendering
       if (renderer.fw_rendering_mode) {
@@ -14047,6 +14291,10 @@ if (lights.length > this.fws_num_lights) {
         renderer.fw_rendering_mode = false;
       }
       renderer.set_default_viewport();
+
+
+      //this.draw_textured_quad(this.render_target3.color_texture, 0.65, 0.5, 0.35 / camera.aspect, 0.35);
+
       if (this.active_shader !== null) {
         this.active_shader.exit(this);
       }
@@ -14151,6 +14399,10 @@ if (lights.length > this.fws_num_lights) {
         this.render_target2,
       ];
 
+      this.render_event1 = new fin.event(this);
+      this.render_event2 = new fin.event(this);
+      this.render_event3 = new fin.event(this);
+      this.render_event4 = new fin.event(this);
 
 
 
@@ -17071,8 +17323,9 @@ void fragment(void) {
 
   ge.active_mesh = ge.define(function (proto, _super) {
 
-    var temp_quat = math.quat(), temp_vec3 = math.vec3();
-    
+    var temp_quat = math.quat(), temp_vec3 = math.vec3(), temp_pos = math.vec3();
+    var S0$x,S0$y,S0$z,S0$qx,S0$qy,S0$qz,S0$qw,S0$A,S0$uvx,S0$uvy,S0$uvz,S0$uuvx,S0$uuvy,S0$uuvz;
+
     proto.update_world_transform = function (position_world, scale_world, rotation_world) {
 
       math.quat.mult(temp_quat, rotation_world, this.rotation)
@@ -17084,9 +17337,36 @@ void fragment(void) {
 
       math.mat4.scale(this.matrix_world, temp_vec3);
 
-      this.matrix_world[12] = position_world[0] + this.position[0];
-      this.matrix_world[13] = position_world[1] + this.position[1];
-      this.matrix_world[14] = position_world[2] + this.position[2];
+      S0$x = this.position[0]; S0$y = this.position[1]; S0$z = this.position[2];
+      S0$qx = rotation_world[0]; S0$qy = rotation_world[1]; S0$qz = rotation_world[2]; S0$qw = rotation_world[3];
+
+
+      S0$uvx = S0$qy * S0$z - S0$qz * S0$y;
+      S0$uvy = S0$qz * S0$x - S0$qx * S0$z;
+      S0$uvz = S0$qx * S0$y - S0$qy * S0$x;
+
+
+      S0$uuvx = S0$qy * S0$uvz - S0$qz * S0$uvy;
+      S0$uuvy = S0$qz * S0$uvx - S0$qx * S0$uvz;
+      S0$uuvz = S0$qx * S0$uvy - S0$qy * S0$uvx;
+
+      
+      S0$A = S0$qw * 2;
+      S0$uvx *= S0$A;
+      S0$uvy *= S0$A;
+      S0$uvz *= S0$A;
+
+      S0$uuvx *= 2;
+      S0$uuvy *= 2;
+      S0$uuvz *= 2;
+
+      temp_pos[0] = S0$x + S0$uvx + S0$uuvx;
+      temp_pos[1] = S0$y + S0$uvy + S0$uuvy;
+      temp_pos[2] = S0$z + S0$uvz + S0$uuvz;
+
+      this.matrix_world[12] = position_world[0] + temp_pos[0];
+      this.matrix_world[13] = position_world[1] + temp_pos[1];
+      this.matrix_world[14] = position_world[2] + temp_pos[2];
 
 
     };
@@ -18678,12 +18958,18 @@ void fragment(){
 
 
 /*chunk-pp-bloom-emission*/
+<?=chunk('precision')?>
 uniform vec4 u_bright_threshold_rw;
+uniform vec4 u_emission_color_rw;
 void fragment(){	
-	 vec4 color = texture2D(u_texture_input_rw, v_uv_rw);        		
-	 float luminance = dot(color.rgb, u_bright_threshold_rw.xyz );
-	 luminance+=(color.a+u_bright_threshold_rw.w);		 
-	 gl_FragColor =  color*luminance;
+	// vec4 color = texture2D(u_texture_input_rw, v_uv_rw);        		
+	// float luminance = dot(color.rgb, u_bright_threshold_rw.xyz );
+	// luminance+=(color.a+u_bright_threshold_rw.w);		 
+	
+	// gl_FragColor =  (color*luminance);
+	 gl_FragColor = u_emission_color_rw;
+
+
 	
 }
 
@@ -19171,11 +19457,12 @@ void fragment(void) {
       this.resolution = params.resolution || 0.5;
       this.resolution_last = this.resolution;
       this.blur_quality = params.blur_quality || 9;
+      // [0.2627, 0.6780, 0.0593, -0.95]
       this.u_bright_threshold_rw = math.vec4(params.bright_threshold || [0.2627, 0.6780, 0.0593, -0.95]);
 
       this.blend_exposure = params.blend_exposure || 3;
       this.blend_gamma = params.blend_gamma || 0.5;
-      this.blend_factor = params.blend_factor || 3.0;
+      this.blend_factor = params.blend_factor || 3;
 
       this.u_offset_rw = math.vec2();
       this.blur_kernel = math.vec3(5.0 / 16.0, 6 / 16.0, 5 / 16.0);
@@ -19183,33 +19470,173 @@ void fragment(void) {
 
     }
     var u_glow_params_rw = math.vec3();
+
+    var i = 0, mesh, shader, uni;
+
+    function render_emisive_meshes(renderer, camera, meshes) {
+
+           
+      for (i = 0; i < meshes.length; i++) {
+        mesh = meshes[i];
+        if (mesh.material.emission_color) {
+          shader = mesh.material.shader
+          if (!shader.emmision_shader) {
+            shader.emmision_shader = shader.extend(glsl["pp-bloom-emission"], { fragment: false });
+            shader.emmision_shader.shadow_shader = true;
+          }
+          shader = shader.emmision_shader;
+
+          if (renderer.use_shader(shader)) {
+            if (shader.camera_version !== camera.version) {
+        shader.camera_version = camera.version;
+        uni = shader.uniforms["u_view_projection_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_projection;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_inverse;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_fw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.fw_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_sd"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.sd_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_up"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.up_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+      }
+          }
+          uni = shader.uniforms["u_emission_color_rw"]; uni.params[uni.params_length] = mesh.material.emission_color; uni.func.apply(shader.gl, uni.params);
+          uni = shader.uniforms["u_model_rw"]; uni.params[uni.params_length] = mesh.matrix_world; uni.func.apply(shader.gl, uni.params);
+          renderer.use_geometry(mesh.geometry);
+      mesh.material.render_mesh(renderer, shader, mesh);
+        }
+
+        
+
+
+      }
+    }
+    function render_event3(renderer, camera, flat_meshes, opuque_meshes, transparent_meshes, lights) {
+
+      if (!this.enabled) return;
+      renderer.render_target2.bind();
+      renderer.gl.clear(16384);
+
+      render_emisive_meshes(renderer, camera, transparent_meshes);
+      //enable forward rendering
+      renderer.gl_blendFunc(1, 1);
+      if (!renderer.fw_rendering_mode) {
+        renderer.gl_enable(3042);
+        renderer.gl_depthMask(false);
+        renderer.gl_depthFunc(514);
+        renderer.fw_rendering_mode = true;
+      }
+
+      render_emisive_meshes(renderer, camera, flat_meshes);
+      render_emisive_meshes(renderer, camera, opuque_meshes);
+     
+
+      this.targets[0].bind();
+
+      renderer.gl.clear(16384);
+
+      renderer.draw_textured_quad(renderer.render_target2.color_texture, 0, 0, 1, 1);
+
+      return;
+      for (i = 0; i < flat_meshes.length; i++) {
+        mesh = flat_meshes[i];
+        if (mesh.flags & 8192) {
+          if (renderer.use_shader(mesh.material.shader)) {
+            shader = renderer.active_shader;
+            if (shader.camera_version !== camera.version) {
+        shader.camera_version = camera.version;
+        uni = shader.uniforms["u_view_projection_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_projection;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_inverse;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_fw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.fw_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_sd"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.sd_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_up"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.up_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+      }
+          }
+          uni = shader.uniforms["u_model_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = mesh.matrix_world;
+        uni.func.apply(shader.gl, uni.params);
+      }
+          renderer.use_geometry(mesh.geometry);
+      mesh.material.render_mesh(renderer, shader, mesh);
+        }
+       
+
+      }
+
+
+
+     
+
+
+    }
     proto.apply = function (renderer, input, output) {
       if (!this.targets) {
         this.targets = [
           new ge.webgl.render_target(renderer, renderer.render_width * this.resolution, renderer.render_height * this.resolution),
-          new ge.webgl.render_target(renderer, renderer.render_width * this.resolution, renderer.render_height * this.resolution)
-        ];
+          new ge.webgl.render_target(renderer, renderer.render_width * this.resolution, renderer.render_height * this.resolution),
+       ];
 
         this.targets[0].attach_color().color_texture.enable_linear_interpolation();
         this.targets[1].attach_color().color_texture.enable_linear_interpolation();
+
+        renderer.render_event3.add(render_event3,this);
+
+        return;
       }       
-
-           
-
+      /*
       this.targets[0].bind();      
       renderer.use_shader(ge.effects.post_process.bloom.emission);
       renderer.use_direct_texture(input, 0);
       renderer.active_shader.set_uniform("u_bright_threshold_rw", this.u_bright_threshold_rw);
       renderer.draw_full_quad();
-
+      */
      
-      
+       // renderer.draw_textured_quad(this.targets[0].color_texture, 0.35, 0.5, 0.35, 0.35);
+
+    
       renderer.use_shader(ge.effects.post_process.bloom.blur_shader);
       renderer.active_shader.set_uniform("u_blurKernel_rw", this.blur_kernel);
       
 
       var t = 0;
-      for (var i1 = 1; i < this.blur_quality; i++) {
+      for (i = 1; i < this.blur_quality; i++) {
         t = i % 2;
         this.targets[t].bind();
         renderer.use_direct_texture(this.targets[(t === 0 ? 1 : 0)].color_texture, 0);
@@ -19226,31 +19653,19 @@ void fragment(void) {
         renderer.active_shader.set_uniform("u_offset_rw", this.u_offset_rw);
         renderer.draw_full_quad();
       }
-      /*
       
-  
-
- 
-  
-
-this.bind_output(renderer, output);
-      renderer.use_direct_texture(input, 0);
-      renderer.use_shader(ge.effects.post_process.shader);
-      renderer.draw_full_quad();
-      */
-
      
       this.bind_output(renderer, output);
       renderer.use_direct_texture(input, 0);
       renderer.use_shader(ge.effects.post_process.bloom.shader);
-      renderer.active_shader.set_uniform("u_glow_emission_rw", 5);
+      renderer.active_shader.set_uniform("u_glow_emission_rw", 1);
 
       u_glow_params_rw[0] = this.blend_exposure;
       u_glow_params_rw[1] = this.blend_gamma;
       u_glow_params_rw[2] = this.blend_factor;
 
       renderer.active_shader.set_uniform("u_glow_params_rw", u_glow_params_rw);
-      renderer.use_direct_texture(this.targets[t].color_texture, 5);
+      renderer.use_direct_texture(this.targets[t].color_texture, 1);
       renderer.draw_full_quad();
 
 
@@ -19267,6 +19682,30 @@ this.bind_output(renderer, output);
     bloom.blur_shader = ge.effects.post_process.shader.extend(glsl["pp-bloom-blur"]);
     bloom.emission = ge.effects.post_process.shader.extend(glsl["pp-bloom-emission"]);
 
+
+    bloom.material = ge.define(function (proto, _super) {
+
+
+      function render_mesh(renderer, shader, mesh) {
+
+
+
+
+
+      }
+
+      return function bloom_material(def) {
+        def = def || {};
+        _super.call(this, def);
+
+        this.on_before_render.add(render_mesh);
+
+
+
+
+      }
+
+    }, ge.shading.shaded_material);
 
     return bloom;
 
@@ -20648,7 +21087,16 @@ _FM["myapp"]=new Object();
 
           var camera = app.render_system.camera;
 
+          var bloom = new ge.effects.post_process.bloom({ enabled: true });
 
+          app.render_system.renderer.post_processes = [
+              new ge.effects.post_process.fxaa({
+                  enabled: false
+
+              }),
+              bloom
+
+          ];
 
           app.root.eular = [0, 0, 0];
           app.attach_component(camera, 'ge_mouse_camera_controller', {
@@ -21173,6 +21621,7 @@ gl_FragColor.w*=v_par_color.w;
 `)
 
                   }),
+                  
               });
 
               var si = 0, ssi = 0, pdata, psize;
@@ -21206,10 +21655,72 @@ gl_FragColor.w*=v_par_color.w;
                   -8.4, 2.2, -5.85, 0, 0, 0]);
 
 
-              pas.spawn_emitter_instance(1000, 2, [0.02, -1, 1, 3,
-                  -8.4, 2.6, -5.85, 0, 0, 0]);
+             // pas.spawn_emitter_instance(1000, 2, [0.02, -1, 1, 3, -8.4, 2.6, -5.85, 0, 0, 0]);
 
              
+             
+              function setup_uv() {
+                  var verts = [];
+                  var x, z,drc;
+                  for (z = 2; z < 13; z += 1.5) {
+                      for (x = 1; x < 17; x += 1.5) {
+                          verts.push(x, 0, z, x + 0.5, 0, z, x + 0.5, 0, z + 0.5);
+                          verts.push(x, 0, z, x + 0.5, 0, z + 0.5, x, 0, z + 0.5);
+                      }
+                  }
+
+                  drc = verts.length / 3;
+                  for (z = 2; z < 13; z += 1.5) {
+                      for (x = 1; x < 17; x += 1.5) {
+                          verts.push(
+                              x + 0.25, 0, z + 0.25,
+                              x, -0.5, z + 0.25,
+                              x + 0.5, -0.5, z + 0.5);
+
+                      }
+                  }
+
+
+                  var ug = ge.geometry.geometry_data.create({
+                      vertices: new Float32Array(verts)
+                  });
+
+                  ug.center_pivot(1, 1, 1, 0, 0, 0);
+
+                  ug.scale_position_rotation(1, 1, 1, 0, 2.5, 0, -0.017453292519943295 * 180, 0, 0);
+                  
+
+                  var uvmesh = new ge.geometry.mesh({
+                      geometry: ug,
+                      material: new ge.shading.material({
+                          ambient: [0, 112/255, 1],                          
+                          both_sides: true,
+                          transparent:0.85,
+                      }),
+                  });
+
+                  uvmesh.emission_color = math.vec4(0, 112 / 255, 1, 1);
+
+                  uvmesh.off_draw_count = drc;
+                  uvmesh.on_draw_count = uvmesh.draw_count;
+                 
+                  uvmesh.draw_count = drc;
+                  uvmesh.on = function () {
+                      uvmesh.material.emission_color = uvmesh.emission_color;
+                      uvmesh.draw_count = uvmesh.on_draw_count;
+                  }
+                  uvmesh.off = function () {
+                      uvmesh.material.emission_color = undefined;
+                      uvmesh.draw_count = uvmesh.off_draw_count;
+
+                  }
+                  console.log(uvmesh);
+                  renderables.push(uvmesh);
+
+                  return uvmesh;
+              }
+
+              var uvmesh= setup_uv();
               app.system_working = false;
               pas.worker.commands_group(function (self, cmd, worker) {
 
@@ -21218,6 +21729,12 @@ gl_FragColor.w*=v_par_color.w;
                       ci = worker.start_command(512);
                       cmd[ci++] = s ? 1 : 2;
                       worker.finish_command(ci);
+                      if (s) {
+                          uvmesh.on();
+                      }
+                      else {
+                          uvmesh.off();
+                      }
                       return s;
                   };
 
@@ -21225,16 +21742,18 @@ gl_FragColor.w*=v_par_color.w;
 
               }, this);
 
+
+
               var ix = 7.5, iy = -5.75, iz = 5.55
 
 
               var keys = camera.ge_keyboard_camera_controller.keys;
 
               var points = new ge.debug.points();
-              app.root.ge_renderable.items.push(points);
+             // app.root.ge_renderable.items.push(points);
 
               var lines = new ge.debug.lines();
-              app.root.ge_renderable.items.push(lines);
+            //  app.root.ge_renderable.items.push(lines);
 
               fin.timers.start(function () {
 
@@ -21356,7 +21875,8 @@ gl_FragColor.w*=v_par_color.w;
                       geometry: g,
                       material: materials[ms.mat] || (new ge.shading.shaded_material({})),
                       draw_offset: ms.draw_offset,
-                      draw_count: ms.draw_count
+                      draw_count: ms.draw_count,
+
                   }));
               });
 
@@ -21380,7 +21900,8 @@ gl_FragColor.w*=v_par_color.w;
                   geometry: human_geo1,
                   material: new ge.shading.shaded_material({
                       cast_shadows: true,
-                      ambient: [0, 1, 0]
+                      ambient: [0, 1, 0],
+                     
                   }),
               }));
 
@@ -21388,9 +21909,11 @@ gl_FragColor.w*=v_par_color.w;
                   geometry: human_geo2,
                   material: new ge.shading.shaded_material({
                       cast_shadows: true,
-                      ambient: [0, 1, 1]
+                      ambient: [0, 1, 1],
+                      
                   }),
               }));
+
 
 
               setup_system(renderables);
