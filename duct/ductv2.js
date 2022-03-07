@@ -21387,8 +21387,11 @@ _FM["myapp"]=new Object();
                           par[8] *= (0.995);
 
                           if (!sys.system_working) {
-                              if (ins.type === 2)  par[2] = 0.5;
-                              return;
+                              if (ins.type === 2) {
+                                  par[2] = 0.5;
+                                  return;
+                              }
+                              
 
                           }
                           for (si = 0; si < sucks.length; si++) {
@@ -21407,7 +21410,7 @@ _FM["myapp"]=new Object();
                               pdist = Math.sqrt(dd);
 
 
-                              if (!suc.check(par, pdist) ) continue;
+                              if (!suc.check(par, pdist) || !sys.system_working) continue;
                              
 
 
