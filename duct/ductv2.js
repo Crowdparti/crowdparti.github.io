@@ -21226,7 +21226,7 @@ _FM["myapp"]=new Object();
                                   par[5] = ins.z + ar[1];
 
                                   par[6] = (Math.random() - 0.5) * 2;
-                                  par[7] = -20;
+                                  par[7] = -10;
                                   par[8] = (Math.random() - 0.5) * 2;
 
 
@@ -21368,14 +21368,7 @@ _FM["myapp"]=new Object();
 
                          
 
-                          if (ins.type === 3) {
-                              par[4] = ins.y+( (Math.random() - 0.5) *0.6);
-                              par[6] = 0;
-                              par[8] = 0;
 
-                              return;
-
-                          }
 
                           if (ins.type === 1) {
                               if (sys.system_working)
@@ -21393,7 +21386,11 @@ _FM["myapp"]=new Object();
                           par[7] *= (0.995);
                           par[8] *= (0.995);
 
+                          if (!sys.system_working) {
+                              if (ins.type === 2)  par[2] = 0.5;
+                              return;
 
+                          }
                           for (si = 0; si < sucks.length; si++) {
                               suc = sucks[si];
 
@@ -21410,7 +21407,7 @@ _FM["myapp"]=new Object();
                               pdist = Math.sqrt(dd);
 
 
-                              if (!suc.check(par, pdist) || !sys.system_working) continue;
+                              if (!suc.check(par, pdist) ) continue;
                              
 
 
@@ -21651,7 +21648,7 @@ gl_FragColor.w*=v_par_color.w;
               }, 4000);
 
 
-              pas.spawn_emitter_instance(1000, 1, [0.01, -1, 3, 2,
+              pas.spawn_emitter_instance(1000, 1, [0.02, -1, 3, 2,
                   -8.4, 2.2, -5.85, 0, 0, 0]);
 
 
@@ -21695,10 +21692,35 @@ gl_FragColor.w*=v_par_color.w;
                       material: new ge.shading.material({
                           ambient: [0, 112/255, 1],                          
                           both_sides: true,
-                          transparent:0.85,
+                          transparent: 0.85,
                       }),
                   });
+                  uvmesh.material.shader = uvmesh.material.shader.extend(`
 
+uniform float u_timer_rw;
+uniform float u_flicker_value;
+
+vec4 att_position(void){
+
+vec4 p=vec4(a_position_rw,1.0);
+p.x+=sin(u_timer_rw*120.0)*u_flicker_value;
+
+    return p;
+}
+
+void vertex(){
+super_vertex();
+}
+
+`);
+
+                  uvmesh.material.on_before_render.add(function (renderer, shader, mesh) {
+                      if (app.system_working) shader.set_uniform("u_flicker_value", 0.04);
+                      else shader.set_uniform("u_flicker_value", 0);
+
+
+
+                  });
                   uvmesh.emission_color = math.vec4(0, 112 / 255, 1, 1);
 
                   uvmesh.off_draw_count = drc;
@@ -21936,7 +21958,7 @@ gl_FragColor.w*=v_par_color.w;
 
           app.start(function () {
 
-          }, is_mobile ? (1 / 40) : (1 / 60));
+          }, is_mobile ? (1 / 45) : (1 / 60));
 
       }})().apply(_FM["myapp"],[_FM["fin"],_FM["math"],_FM["gltf"],_FM["ge"],_FM["html"]]);
  return _FM;})()
