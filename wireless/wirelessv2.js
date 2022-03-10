@@ -21454,7 +21454,7 @@ _FM["myapp"]=new Object();
          
 
          document.onmouseup = app.render_system.camera_state(true);
-         // camera.set_position({ "pos": [-4.180256366729736, 0,75.78575134277344], "eular": [0.039844360351562504, 0.15938049316406255, 0] });
+          camera.set_position({ "pos": [-4.180256366729736, 0,75.78575134277344], "eular": [0.039844360351562504, 0.15938049316406255, 0] });
 
 
        
