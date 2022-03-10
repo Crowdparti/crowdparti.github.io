@@ -2065,6 +2065,55 @@ _FM["math"]=new Object();
     }, math, scope);
 
 
+    math.mat3.target_to = fin.macro(function mat3_target_to(out$, eye$, target$, up$) {
+      $mat1 = out$;
+
+      $A = eye$;
+      $B = up$;
+      $C = target$;
+
+      $a00 = $A[0] - $C[0]; //z0
+      $a01 = $A[1] - $C[1]; //z1
+      $a02 = $A[2] - $C[2]; //z2
+
+      $det = $a00 * $a00 + $a01 * $a01 + $a02 * $a02;
+      if ($det > 0) {
+        $det = 1 / Math.sqrt($det);
+        $a00 *= $det;
+        $a01 *= $det;
+        $a02 *= $det;
+      }
+
+
+      $b00 = $B[1] * $a02 - $B[2] * $a01; //x0
+      $b01 = $B[2] * $a00 - $B[0] * $a02; //x1
+      $b02 = $B[0] * $a01 - $B[1] * $a00; //x2
+
+      $det = $b00 * $b00 + $b01 * $b01 + $b02 * $b02;
+      if ($det > 0) {
+        $det = 1 / Math.sqrt($det);
+        $b00 *= $det;
+        $b01 *= $det;
+        $b02 *= $det;
+      }
+
+      $mat1[0] = $b00;
+      $mat1[1] = $b01;
+      $mat1[2] = $b02;
+     
+      $mat1[3] = $a01 * $b02 - $a02 * $b01;
+      $mat1[4] = $a02 * $b00 - $a00 * $b02;
+      $mat1[5] = $a00 * $b01 - $a01 * $b00;
+
+
+      $mat1[6] = $a00;
+      $mat1[7] = $a01;
+      $mat1[8] = $a02;
+
+
+    }, math, scope);
+
+
 
   }, "math.mat3");
 
@@ -2644,7 +2693,13 @@ _FM["math"]=new Object();
           math.vec3_length$($tmpvec3)
 
         if ($qLen < 0.000001) {
-          math.vec3_cross$($tmpvec3, $yUnitVec3, $quat2)
+
+          $tmpvec3[0] = $yUnitVec3[1] * $quat2[2] - $yUnitVec3[2] * $quat2[1];
+          $tmpvec3[1] = $yUnitVec3[2] * $quat2[0] - $yUnitVec3[0] * $quat2[2];
+          $tmpvec3[2] = $yUnitVec3[0] * $quat2[1] - $yUnitVec3[1] * $quat2[0];
+
+
+
         }
 
         math.vec3_normalize$($tmpvec3, $tmpvec3)
@@ -2662,12 +2717,21 @@ _FM["math"]=new Object();
 
       }
       else if ($dot > 0.999999) {
-        $quat1[0] = 0;$quat1[1] = 0; $quat1[2] = 0; $quat1[3] = 1;
+        $quat1[0] = 0; $quat1[1] = 0; $quat1[2] = 0; $quat1[3] = 1;
+
+
+
 
       }
 
       else {
-        math.vec3_cross$($quat1, $quat2, $quat3)
+
+        $quat1[0] = $quat2[1] * $quat3[2] - $quat2[2] * $quat3[1];
+        $quat1[1] = $quat2[2] * $quat3[0] - $quat2[0] * $quat3[2];
+        $quat1[2] = $quat2[0] * $quat3[1] - $quat2[1] * $quat3[0];
+
+
+
         $quat1[3] = 1 + $dot;
 
 
@@ -8922,7 +8986,7 @@ gl_Position=u_view_projection_rw*gl_Position;
           });
         }
 
-        g.num_items = g.index_data.length;
+        if (g.index_data)  g.num_items = g.index_data.length;
 
        // ge.geometry.geometry_data.calc_normals(g);
         return g;
@@ -16784,8 +16848,6 @@ void fragment(void) {
     }
 
     function meshes_sort(a, b) {
-      a.suid = a.material.shader.uuid;
-      b.suid = b.material.shader.uuid;
       return a.material.shader.uuid - b.material.shader.uuid;
     }
 
@@ -16837,19 +16899,7 @@ void fragment(void) {
         }
       }
 
-      /*
-      while ((entity = this.app.iterate_entities("drage_points")) !== null) {
-        renderable = entity.drage_points;
-        for (i = 0; i < renderable.items.length; i++) {
-          item = renderable.items[i];
-          if (item.trans.updated) {
-            item.update_world_transform(item.trans.pos, item.trans.scale, item.trans.rot);
-            item.update_bounds(item.matrix_world, item.trans);
-            item.require_update = 0;
-          }
-        }
-      }
-      */
+
       comp = this.app.components['ge_renderable'];
       if (comp) {
         ei = comp.entities.length;
@@ -17005,6 +17055,15 @@ void fragment(void) {
 
 
       }
+
+      for (i = 0; i < this.renderer.post_processes.length; i++) {
+        item = this.renderer.post_processes[i];
+        if (item.enabled) {
+          item.ready(this.renderer, this.meshes);
+        }
+      }
+
+
       i = this.meshes.length;
 
 
@@ -17220,6 +17279,7 @@ void fragment(void) {
      
       this.lights = [];
       this.meshes = [];
+
 
       this.flat_meshes = [];
       this.opuque_meshes = [];
@@ -17918,9 +17978,13 @@ void vertex(){
           Math.abs(Math.sqrt(S5$tmpvec3[0] * S5$tmpvec3[0] + S5$tmpvec3[1] * S5$tmpvec3[1] + S5$tmpvec3[2] * S5$tmpvec3[2]));
 
         if (S5$qLen < 0.000001) {
+
           S5$tmpvec3[0] = S5$yUnitVec3[1] * S5$quat2[2] - S5$yUnitVec3[2] * S5$quat2[1];
-      S5$tmpvec3[1] = S5$yUnitVec3[2] * S5$quat2[0] - S5$yUnitVec3[0] * S5$quat2[2];
-      S5$tmpvec3[2] = S5$yUnitVec3[0] * S5$quat2[1] - S5$yUnitVec3[1] * S5$quat2[0];
+          S5$tmpvec3[1] = S5$yUnitVec3[2] * S5$quat2[0] - S5$yUnitVec3[0] * S5$quat2[2];
+          S5$tmpvec3[2] = S5$yUnitVec3[0] * S5$quat2[1] - S5$yUnitVec3[1] * S5$quat2[0];
+
+
+
         }
 
         S0$x = S5$tmpvec3[0] * S5$tmpvec3[0] + S5$tmpvec3[1] * S5$tmpvec3[1] + S5$tmpvec3[2] * S5$tmpvec3[2];
@@ -17942,14 +18006,21 @@ void vertex(){
 
       }
       else if (S5$dot > 0.999999) {
-        S5$quat1[0] = 0;S5$quat1[1] = 0; S5$quat1[2] = 0; S5$quat1[3] = 1;
+        S5$quat1[0] = 0; S5$quat1[1] = 0; S5$quat1[2] = 0; S5$quat1[3] = 1;
+
+
+
 
       }
 
       else {
+
         S5$quat1[0] = S5$quat2[1] * S5$quat3[2] - S5$quat2[2] * S5$quat3[1];
-      S5$quat1[1] = S5$quat2[2] * S5$quat3[0] - S5$quat2[0] * S5$quat3[2];
-      S5$quat1[2] = S5$quat2[0] * S5$quat3[1] - S5$quat2[1] * S5$quat3[0];
+        S5$quat1[1] = S5$quat2[2] * S5$quat3[0] - S5$quat2[0] * S5$quat3[2];
+        S5$quat1[2] = S5$quat2[0] * S5$quat3[1] - S5$quat2[1] * S5$quat3[0];
+
+
+
         S5$quat1[3] = 1 + S5$dot;
 
 
@@ -18060,9 +18131,13 @@ void vertex(){
           Math.abs(Math.sqrt(S5$tmpvec3[0] * S5$tmpvec3[0] + S5$tmpvec3[1] * S5$tmpvec3[1] + S5$tmpvec3[2] * S5$tmpvec3[2]));
 
         if (S5$qLen < 0.000001) {
+
           S5$tmpvec3[0] = S5$yUnitVec3[1] * S5$quat2[2] - S5$yUnitVec3[2] * S5$quat2[1];
-      S5$tmpvec3[1] = S5$yUnitVec3[2] * S5$quat2[0] - S5$yUnitVec3[0] * S5$quat2[2];
-      S5$tmpvec3[2] = S5$yUnitVec3[0] * S5$quat2[1] - S5$yUnitVec3[1] * S5$quat2[0];
+          S5$tmpvec3[1] = S5$yUnitVec3[2] * S5$quat2[0] - S5$yUnitVec3[0] * S5$quat2[2];
+          S5$tmpvec3[2] = S5$yUnitVec3[0] * S5$quat2[1] - S5$yUnitVec3[1] * S5$quat2[0];
+
+
+
         }
 
         S0$x = S5$tmpvec3[0] * S5$tmpvec3[0] + S5$tmpvec3[1] * S5$tmpvec3[1] + S5$tmpvec3[2] * S5$tmpvec3[2];
@@ -18084,14 +18159,21 @@ void vertex(){
 
       }
       else if (S5$dot > 0.999999) {
-        S5$quat1[0] = 0;S5$quat1[1] = 0; S5$quat1[2] = 0; S5$quat1[3] = 1;
+        S5$quat1[0] = 0; S5$quat1[1] = 0; S5$quat1[2] = 0; S5$quat1[3] = 1;
+
+
+
 
       }
 
       else {
+
         S5$quat1[0] = S5$quat2[1] * S5$quat3[2] - S5$quat2[2] * S5$quat3[1];
-      S5$quat1[1] = S5$quat2[2] * S5$quat3[0] - S5$quat2[0] * S5$quat3[2];
-      S5$quat1[2] = S5$quat2[0] * S5$quat3[1] - S5$quat2[1] * S5$quat3[0];
+        S5$quat1[1] = S5$quat2[2] * S5$quat3[0] - S5$quat2[0] * S5$quat3[2];
+        S5$quat1[2] = S5$quat2[0] * S5$quat3[1] - S5$quat2[1] * S5$quat3[0];
+
+
+
         S5$quat1[3] = 1 + S5$dot;
 
 
@@ -18985,20 +19067,44 @@ void fragment(){
 
 
 
-/*chunk-glow-material*/
-void vertex(void){
-super_vertex();
+
+
+/*chunk-pp-glow*/
+uniform sampler2D u_glow_emission_rw;
+uniform vec3 u_glow_params_rw;
+
+void fragment(void){	
+
+vec4 cBase = texture2D(u_texture_input_rw, v_uv_rw);
+	vec4 cOver = texture2D(u_glow_emission_rw, v_uv_rw);			
+vec4 blend = cBase + cOver * u_glow_params_rw.z;
+   // blend = vec4(1.0) - exp(-blend * u_glow_params_rw.x);
+   // blend = pow(blend, vec4(1.0 / u_glow_params_rw.y));
+	gl_FragColor =blend;
+
 }
 
-void fragment(void) {
-super_fragment();
+/*chunk-pp-glow-blur*/
 
-gl_FragColor.rgb*=1.1;
+uniform vec2 u_offset_rw;
+uniform vec3 u_blurKernel_rw;
+void fragment(){	
+	vec3 A = u_blurKernel_rw.x* texture2D(u_texture_input_rw, v_uv_rw - u_offset_rw).xyz;
+	vec3 B = u_blurKernel_rw.y* texture2D(u_texture_input_rw, v_uv_rw).xyz;
+	vec3 C = u_blurKernel_rw.z* texture2D(u_texture_input_rw, v_uv_rw + u_offset_rw).xyz;
+	vec3 color = A + B + C;
+	gl_FragColor = vec4(color, 1);	
+	
 }
 
 
 
-
+/*chunk-pp-glow-emission*/
+<?=chunk('precision')?>
+uniform vec4 u_glow_color_rw;
+void fragment(){	
+	 gl_FragColor = u_glow_color_rw;
+}
 
 /*chunk-skybox*/
 <?=chunk('precision')?>
@@ -19285,7 +19391,7 @@ void fragment(void) {
   ge.effects.post_process = ge.define(function (proto) {
 
     function post_process(shader) {
-      this.guid = fin.guidi();
+      this.uuid = fin.guidi();
       this.shader = shader || ge.effects.post_process.shader;
       if (!this.on_apply) {
         this.on_apply = null;
@@ -19295,6 +19401,10 @@ void fragment(void) {
     }
 
     post_process.shader = ge.webgl.shader.parse(glsl["pp-default"]);
+    proto.ready = function (renderer, meshes) {
+
+    };
+
     proto.resize = function (width, height) { }
     proto.bind_output = function (renderer, output) {
       if (output === null) {
@@ -19714,7 +19824,217 @@ void fragment(void) {
 
 
 
+  ge.effects.post_process.glow = ge.define(function (proto, _super) {
 
+
+    function glow(params) {
+      params = params || {};
+      _super.apply(this);
+      fin.merge_object(params, this);
+      this.resolution = params.resolution || 0.5;
+      this.resolution_last = this.resolution;
+      this.blur_quality = params.blur_quality || 9;
+
+      this.blend_exposure = params.blend_exposure || 3;
+      this.blend_gamma = params.blend_gamma || 0.5;
+      this.blend_factor = params.blend_factor || 1;
+
+      this.u_offset_rw = math.vec2();
+      this.blur_kernel = math.vec3(5.0 / 16.0, 6 / 16.0, 5 / 16.0);
+
+      this.meshes = new fin.array();
+
+
+    }
+    var u_glow_params_rw = math.vec3();
+
+    var i = 0, mesh, shader, uni;
+
+
+    function render_event3(renderer, camera, flat_meshes, opuque_meshes, transparent_meshes, lights) {
+
+      if (!this.enabled || this.meshes.length<1) return;
+      renderer.render_target2.bind();
+      renderer.gl.clear(16384);
+
+      //enable forward rendering
+      renderer.gl_blendFunc(1, 1);
+      if (!renderer.fw_rendering_mode) {
+        renderer.gl_enable(3042);
+        renderer.gl_depthMask(false);
+        renderer.gl_depthFunc(514);
+        renderer.fw_rendering_mode = true;
+      }
+
+      for (i = 0; i < this.meshes.length; i++) {
+        mesh = this.meshes.data[i];
+        shader = mesh.material.shader
+
+        if (!shader.glow_shader) {
+          shader.glow_shader = shader.extend(glsl["pp-glow-emission"], { fragment: false });
+          shader.glow_shader.shadow_shader = true;
+        }
+        shader = shader.glow_shader;
+
+        if (renderer.use_shader(shader)) {
+          if (shader.camera_version !== camera.version) {
+        shader.camera_version = camera.version;
+        uni = shader.uniforms["u_view_projection_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_projection;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.view_inverse;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_fw"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.fw_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_sd"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.sd_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+        uni = shader.uniforms["u_view_up"];
+      if (uni) {
+        uni.params[uni.params_length] = camera.up_vector;
+        uni.func.apply(shader.gl, uni.params);
+      }
+      }
+        }
+        uni = shader.uniforms["u_glow_color_rw"]; uni.params[uni.params_length] = mesh.material.glow_color; uni.func.apply(shader.gl, uni.params);
+        uni = shader.uniforms["u_model_rw"]; uni.params[uni.params_length] = mesh.matrix_world; uni.func.apply(shader.gl, uni.params);
+        renderer.use_geometry(mesh.geometry);
+      mesh.material.render_mesh(renderer, shader, mesh);
+      }
+
+
+      this.etar.bind();
+
+      renderer.gl.clear(16384);
+
+      renderer.draw_textured_quad(renderer.render_target2.color_texture, 0, 0, 1, 1);
+
+     
+    };
+
+    proto.apply = function (renderer, input, output) {
+     
+      if (this.meshes.length < 1) {
+        renderer.use_shader(post_process.shader);
+        this.bind_output(renderer, output);
+        renderer.use_direct_texture(input, 0);
+        renderer.draw_full_quad();
+        return;
+      }
+      var targets = this.targets;
+
+      targets[0].bind();
+      renderer.gl.clear(16384);
+      renderer.draw_textured_quad(this.etar.color_texture, 0, 0, 1, 1);
+
+     // renderer.draw_textured_quad(targets[0].color_texture, 0.35, 0.5, 0.35, 0.35);
+
+
+      renderer.use_shader(ge.effects.post_process.glow.blur_shader);
+      renderer.active_shader.set_uniform("u_blurKernel_rw", this.blur_kernel);
+
+
+      var t = 0;
+      for (i = 1; i < this.blur_quality; i++) {
+        t = i % 2;
+        targets[t].bind();
+        renderer.use_direct_texture(targets[(t === 0 ? 1 : 0)].color_texture, 0);
+        if (t === 0) {
+          this.u_offset_rw[0] = (1 / (input.width / i));
+          this.u_offset_rw[1] = 0;
+
+        }
+        else {
+          this.u_offset_rw[1] = (1 / (input.height / i));
+          this.u_offset_rw[0] = 0;
+        }
+
+        renderer.active_shader.set_uniform("u_offset_rw", this.u_offset_rw);
+        renderer.draw_full_quad();
+      }
+
+
+      this.bind_output(renderer, output);
+      renderer.use_direct_texture(input, 0);
+      renderer.use_shader(ge.effects.post_process.glow.shader);
+      renderer.active_shader.set_uniform("u_glow_emission_rw", 1);
+
+      u_glow_params_rw[0] = this.blend_exposure;
+      u_glow_params_rw[1] = this.blend_gamma;
+      u_glow_params_rw[2] = this.blend_factor;
+
+      renderer.active_shader.set_uniform("u_glow_params_rw", u_glow_params_rw);
+      renderer.use_direct_texture(targets[t].color_texture, 1);
+      renderer.draw_full_quad();
+
+       renderer.draw_textured_quad(this.targets[t].color_texture, 0.35, 0.5, 0.35, 0.35);
+
+
+    }
+
+
+    var __targets = {},tar1,tar2;
+
+    function get_targets(resu, renderer) {
+      if (__targets[resu]) {
+        return __targets[resu];
+      }
+      else {
+
+        tar1 = new ge.webgl.render_target(renderer, renderer.render_width * resu, renderer.render_height * resu);
+        tar2 = new ge.webgl.render_target(renderer, renderer.render_width * resu, renderer.render_height * resu);
+
+
+        __targets[resu] = [tar1, tar2];
+
+        tar1.attach_color().color_texture.enable_linear_interpolation();
+        tar2.attach_color().color_texture.enable_linear_interpolation();
+
+        return __targets[resu];
+      }
+    }
+
+    proto.ready = function (renderer, meshes) {
+      if (!this.targets) {
+        this.targets = get_targets(this.resolution, renderer);
+        this.etar = new ge.webgl.render_target(renderer, renderer.render_width * this.resolution, renderer.render_height * this.resolution);
+        this.etar.attach_color().color_texture.enable_linear_interpolation();
+
+        renderer.render_event3.add(render_event3, this);
+        return;
+      }
+
+      this.meshes.clear();
+      for (i = 0; i < meshes.length; i++) {
+        mesh = meshes[i];
+        if (mesh.material.glow_id === this.uuid) {
+          this.meshes.push(mesh);
+        }
+      }
+
+    };
+
+
+    glow.shader = ge.effects.post_process.shader.extend(glsl["pp-glow"]);
+    glow.blur_shader = ge.effects.post_process.shader.extend(glsl["pp-glow-blur"]);
+
+
+
+
+    return glow;
+
+
+  }, ge.effects.post_process);
 
 
 
@@ -21134,7 +21454,7 @@ _FM["myapp"]=new Object();
          
 
          document.onmouseup = app.render_system.camera_state(true);
-          camera.set_position({ "pos": [-4.180256366729736, 0,75.78575134277344], "eular": [0.039844360351562504, 0.15938049316406255, 0] });
+         // camera.set_position({ "pos": [-4.180256366729736, 0,75.78575134277344], "eular": [0.039844360351562504, 0.15938049316406255, 0] });
 
 
        
@@ -21169,7 +21489,7 @@ _FM["myapp"]=new Object();
                   geometry: ge.geometry.geometry_data.create({
                       attr: {
                           "a_tm_rw": {
-                              data: ge.geometry.geometry_data.create_float32_timeline(150),
+                              data: ge.geometry.geometry_data.create_float32_ids(30),
                               item_size: 1
                           }
                       }
@@ -21195,6 +21515,9 @@ uniform vec3 u_view_up;
 
 uniform vec3 u_view_fw;
 
+
+uniform vec4 u_pu;
+
 attribute float a_tm_rw;
 void vertex(){
 float speed=u_wave_params.x; //0.05
@@ -21202,10 +21525,31 @@ float tension=u_wave_params.y; //0.20
 float height=u_wave_params.z; //3.0
 
 float l=u_dir_rw.w;
-vec4 pos=vec4(u_dir_rw.xyz*(l*a_tm_rw),1.0);
+float tm=a_tm_rw/30.0;
 
+//l+=(mod(u_timer_rw,0.1)/0.1)*height;
+vec4 pos=vec4(u_dir_rw.xyz*(l*tm),1.0);
+
+
+speed=14.5;
 float anim=(u_timer_rw*(-l*speed));
-pos.xyz+=u_up_rw*(sin((l*(a_tm_rw*tension))+anim)*height);
+//pos.xyz+=u_view_up*(sin((l*(a_tm_rw*tension))+anim)*height);
+
+
+//pos.xyz+=u_dir_rw.xyz*abs(sin((l*(a_tm_rw*tension))+(u_timer_rw*speed)));
+
+
+
+int pi=int(mod(a_tm_rw,3.0));
+
+height=2.0;
+pos.xyz+=(u_view_up*u_pu[pi])*height;
+
+
+//pos.xyz+=u_dir_rw.xyz*abs(sin(tm*speed));
+tension=155.0;
+height=0.4;
+
 
 pos.xyz += u_start_rw;
 pos=u_model_rw*pos;
@@ -21214,8 +21558,10 @@ pos=u_model_rw*pos;
 
 
  gl_Position=u_view_projection_rw*(pos);
-gl_PointSize =max( 9.0 / gl_Position.w, 1.0);
-gl_PointSize =3.0;
+
+//gl_PointSize = 210.0 / gl_Position.w;
+
+gl_PointSize =8.0;
 }
 
 uniform vec4 u_draw_color;
@@ -21240,7 +21586,10 @@ gl_FragColor=u_draw_color;
                       m.flags += 2;
                       m.material.complete_render_mesh = (function (_super) {
                           var i, ins, mm = math.mat4(), default_color = math.vec4(1, 1, 1, 1);
+
+                          var pu = math.vec4(-1, 0, 0.5, 0);
                           return function (renderer, shader, mesh) {
+                              shader.set_uniform('u_pu', pu);
                               for (i = 0; i < instances.length; i++) {
 
 
@@ -21303,7 +21652,171 @@ gl_FragColor=u_draw_color;
                       params: wparams,
                       draw_color: draw_color,
                       draw_type: draw_type ,
-                      enabled: false
+                      enabled: true
+                  };
+                  instances.push(ins);
+                  return ins;
+              };
+
+              return e;
+          }
+
+          function setup_signals2() {
+
+              var instances = [];
+                       
+
+
+              var g1 = ge.geometry.geometry_data.create({
+                  vertices: new Float32Array([-0.5, 0, 0,
+                  -0.35, 0.25, 0,
+                      0, 0.5, 0,
+                      0.35, 0.25, 0,
+                      0.5, 0, 0])
+              });
+
+              var g2 = ge.geometry.geometry_data.create({
+                  vertices: new Float32Array([-0.5, 0, 0,
+                  -0.5, 0.5, 0,
+                      0.5, 0, 0,
+                      0.5, 0.5, 0,])
+              });
+              g2.scale_position_rotation(1, 1, 1, 0, 0, 0, 0, 0, 0.017453292519943295 * 45);
+
+
+              var gg = ge.geometry.geometry_data.merge([g1, g2]);
+              gg.add_attribute("a_ins_rw", {
+                  data: ge.geometry.geometry_data.create_float32_timeline(30),
+                  item_size: 1,
+                  divisor: 1
+              })
+
+              console.log(gg);
+
+              var i_count = gg.attributes.a_ins_rw.data.length;
+              var e = app.create_renderable(new ge.geometry.mesh({
+                  geometry: gg, material: new ge.shading.material({
+
+                  })
+              }),
+                  function (m, e) {
+
+
+                      e.transform.set_parent(app.root.transform)
+                      m.material.shader = m.material.shader.extend(`
+uniform float u_timer_rw;
+
+
+uniform vec3 u_start_rw;
+uniform vec4 u_dir_rw;
+
+uniform vec4 u_dd_rw;
+
+attribute float a_ins_rw;
+<?=chunk('quat-dquat')?>
+vec4 att_position(void){
+vec4 pos=vec4(quat_transform(u_dd_rw,a_position_rw) ,1.0);
+
+
+
+
+float speed=u_dir_rw.w/30.0;
+float tm=(mod(u_timer_rw,0.2)/0.2)*speed;
+
+pos.xyz+=u_dir_rw.xyz*((u_dir_rw.w*a_ins_rw+tm));
+
+pos.xyz+=u_start_rw;
+return pos;
+}
+
+
+void vertex(){
+super_vertex();
+
+
+}
+
+uniform vec4 u_draw_color;
+
+void fragment(){
+gl_FragColor=u_draw_color;
+
+}
+
+`);
+
+
+
+
+
+
+
+
+
+
+
+                      m.flags += 2;
+                      m.material.complete_render_mesh = (function (_super) {
+                          var i, ins;
+
+
+                          return function (renderer, shader, mesh) {
+
+                              for (i = 0; i < instances.length; i++) {
+
+
+                                  ins = instances[i];
+                                  if (ins.enabled) {
+                                      if (!ins.dir) {
+                                     
+                                          ins.dir = math.vec4();
+                                          ins.dd = math.quat();
+                                          math.vec3.subtract(ins.dir, ins.end, ins.start);
+                                          ins.dir[3] = math.vec3.get_length(ins.dir);
+                                          math.vec3.normalize(ins.dir, ins.dir);
+                                          math.quat.rotation_to(ins.dd, [0, 1, 0], ins.dir);
+                                          ins.gg = gg.subs[ins.type];
+                                          console.log(ins);
+                                      }
+
+
+                                      shader.set_uniform('u_dd_rw', ins.dd);
+                                      shader.set_uniform('u_start_rw', ins.start);
+                                      shader.set_uniform('u_dir_rw', ins.dir);
+                                      shader.set_uniform('u_draw_color', ins.draw_color);
+
+                                      // renderer.gl.drawArrays(0, 0, this.final_draw_count);
+
+                                     // renderer.gl.drawArrays(ins.draw_type, 0, this.final_draw_count);
+
+                                      renderer.gl.ANGLE_instanced_arrays.drawArraysInstancedANGLE(3, ins.gg.v_index, ins.gg.v_count, i_count);
+
+                                      // renderer.gl.drawArrays(3, 0, this.final_draw_count);
+                                  }
+
+
+
+                              }
+
+                              // 
+
+
+
+
+                          }
+                      })(m.material.complete_render_mesh);
+
+
+                  });
+
+
+              e.add_signal = function (start, end, type, draw_color) {
+                  var ins = {
+                      start: start,
+                      end: end,
+                      type:type,
+                      draw_color: draw_color,
+                      enabled: true
                   };
                   instances.push(ins);
                   return ins;
@@ -21534,7 +22047,7 @@ gl_FragColor=u_draw_color;
 
 
               var sprite_sheet = new ge.shading.material({
-                  texture: ge.webgl.texture.from_url("tset1.png", true),
+                  texture: ge.webgl.texture.from_url("tset1.png", false),
                   both_sides: true,
                   ambient: [1, 1, 1],
                   no_depth_test: true
@@ -21563,32 +22076,34 @@ gl_FragColor=u_draw_color;
 
               var fan = load_fan(fanobj, fanmtl);
 
-              var sg = setup_signals();
+              var sg = setup_signals2();
 
               fan.pos = [-48, -4, 14];
               var ewave_params = math.vec3([0.6, 5.20, 0.15]);
-              var ewave_color = math.vec4(1, 1, 1, 1);
+              var ewave_color = math.vec4(2, 2, 0, 1);
 
 
-              var swave_params = math.vec3([0.2, 5.20, 0.35]);
-              var swave_color = math.vec4(2, 0, 0, 1);
+              var swave_params = math.vec3([0.2, 5.20, 0]);
+              var swave_color = math.vec4(0, 2, 0, 1);
+
+
 
               var signals = {};
 
-              signals.device1_fan_electric = sg.add_signal(objects["device1"].origin, fan.pos, ewave_params, ewave_color, 3);
+              signals.device1_fan_electric = sg.add_signal(objects["device1"].origin, fan.pos, 1, ewave_color);
 
-              signals.device1_fan_data = sg.add_signal(objects["device1"].origin, fan.pos, swave_params, swave_color, 0);
-
-
-
-              signals.device2_tvwirelessswitch_electric = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, ewave_params, ewave_color, 3);
-
-              signals.device2_tvwirelessswitch_data = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, swave_params, swave_color, 0);
+              signals.device1_fan_data = sg.add_signal(objects["device1"].origin, fan.pos, 0, swave_color);
 
 
-              signals.device2_laptop_electric = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, ewave_params, ewave_color, 3);
 
-              signals.device2_laptop_data = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, swave_params, swave_color, 0);
+              signals.device2_tvwirelessswitch_electric = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, 1, ewave_color);
+
+              signals.device2_tvwirelessswitch_data = sg.add_signal(objects["device2"].origin, objects["tvwirelessswitch"].origin, 0, swave_color);
+
+
+              signals.device2_laptop_electric = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, 1, ewave_color);
+
+              signals.device2_laptop_data = sg.add_signal(objects["device2"].origin, objects["laptop"].origin, 0, swave_color);
 
 
               var battery_charged = math.vec4([4, 1, 3, 0]);
@@ -21604,8 +22119,8 @@ gl_FragColor=u_draw_color;
 
 
               objects.laptop.bat = sprite_sheet.add({
-                  pos: [objects.laptop.origin[0] - 2, objects.laptop.origin[1], objects.laptop.origin[2] ],
-                  scale:[1.5,1.5,1.5]
+                  pos: [objects.laptop.origin[0] - 3, objects.laptop.origin[1], objects.laptop.origin[2] ],
+                  scale:[3,3,3]
               });
 
 
@@ -21619,7 +22134,7 @@ gl_FragColor=u_draw_color;
 
               fan.bat = sprite_sheet.add({
                   pos: [fan.pos[0], fan.pos[1] - 2, fan.pos[2]],
-                  scale: [1.5, 1.5, 1.5]
+                  scale: [3, 3,3]
 
               });
               console.log('fan.transform.pos', fan.transform.pos);
@@ -21705,7 +22220,8 @@ gl_FragColor=u_draw_color;
 
 
               default_state();
-
+              
+              //dv.querySelector('#modedata').oninput();
 
 
               
@@ -21723,6 +22239,9 @@ gl_FragColor=u_draw_color;
 
 
           function load_zip() {
+
+
+
               fin.url_loader("wireless-system.zip", function (data) {
 
                   unpack_zip(data, function (zip) {
