@@ -22265,7 +22265,7 @@ super_vertex();
                           markerNum = arController.getMarkerNum();
 
                           if (markerNum > 0) {
-
+                              app.root.transform.set_scale(0.13, 0.13, 0.13);
                               if (markResult) {
                                   arController.getTransMatSquareCont(0, 1, markerMatrix, markerMatrix);
                               } else {
@@ -22280,11 +22280,11 @@ super_vertex();
                               arController.arglCameraViewRHf(arController.transMatToGLMat(markerMatrix), tmpMat);
 
 
-                            //  tmpMat[12] = math.clamp(tmpMat[12],-30, 30);
-                             // tmpMat[13] = math.clamp(tmpMat[13],-30, 30);
-                             // tmpMat[14] = math.clamp(tmpMat[14],-1000, -2);
+                              //  tmpMat[12] = math.clamp(tmpMat[12],-30, 30);
+                              // tmpMat[13] = math.clamp(tmpMat[13],-30, 30);
+                              // tmpMat[14] = math.clamp(tmpMat[14],-1000, -2);
 
-                             
+
                               tmat[12] = tmpMat[12];
                               tmat[13] = tmpMat[13];
                               tmat[14] = tmpMat[14];
@@ -22294,13 +22294,16 @@ super_vertex();
 
                               });
                               app.root.transform.set_pos(tmpMat[12], tmpMat[13], tmpMat[14]);
-                             // math.mat4.multiply(tmpMat, tmpMat, tmat);
+                              // math.mat4.multiply(tmpMat, tmpMat, tmat);
                               //math.mat4.get_rotation(qu1, tmpMat);
 
                           }
+                          else {
+                              app.root.transform.set_scale(0, 0, 0);
+                          }
 
 
-                      }, 0.2);
+                      }, 0.1);
 
 
 
