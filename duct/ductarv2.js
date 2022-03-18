@@ -21475,8 +21475,13 @@ _FM["myapp"]=new Object();
           }
 
           setTimeout(function () {
-
-              dapp.set_size(window.innerWidth / 2, window.innerHeight / 2);
+              if (is_mobile) {
+                  dapp.set_size(window.innerWidth / 2, window.innerHeight / 2);
+              }
+              else {
+                  dapp.set_size(window.innerWidth , window.innerHeight );
+              }
+              
           }, 10);
           var app = new ge.app({
               renderer: {
@@ -21539,19 +21544,27 @@ _FM["myapp"]=new Object();
           });
 
 
-          document.onmouseup = app.render_system.camera_state();
-         camera.set_position({  "pos": [-0.578, 1.408, 26.03],             "eular": [0.015, -3.6754e-15, 0]      });
+          document.onmouseup = app.render_system.camera_state(true);
+          if (is_mobile) {
+              camera.set_position({ "pos": [0, 0, 30.7599], "eular": [0, 0, 0] });
 
+          }
+          else {
+              camera.set_position({ "pos": [0, 0, 23.7599], "eular": [0, 0, 0] });
+
+          }
+         
 
           app.create_renderable(new ge.shading.light({
               intensity: 1,
-              ambient: [0.85, 0.85, 0.85]
+              ambient: [0.75, 0.75, 0.75]
           }),
               function (m, e) {
-                  e.transform.set_eular(RD(-125), RD(160), 0);
+                  e.transform.set_eular(RD(-115), RD(180), 0);
+                  e.transform.set_parent(app.root.transform);
                   console.log('light', e.transform);
                   m.enable_shadows({
-                      shadow_intensity: 0.2,
+                      shadow_intensity: 0.3,
                       shadow_map_size: 2048,
                       shadow_camera_distance: 20
                   })
@@ -22213,10 +22226,7 @@ super_vertex();
                       var ww = video.videoWidth;
                       var hh = video.videoHeight;
                       var ra = (window.innerWidth / ww);
-                      ww *= ra;
-                      hh *= ra;
-                      //dapp.style.width = ww + "px";
-                     // dapp.style.height = hh + "px";
+
 
                       dapp.style.width = video.videoWidth + "px";
                       dapp.style.height = video.videoHeight + "px";
@@ -22277,7 +22287,7 @@ super_vertex();
                       function updatetmat() {
                           math.quat.rotate_eular(qrot, qrx, qry, qrz);
                           math.mat4.from_quat(tmat, qrot);
-                          math.mat4.scale(tmat, [0.15, 0.15, 0.15]);
+                         // math.mat4.scale(tmat, [0.15, 0.15, 0.15]);
                       }
 
                       mouse_drage2 = function (dx, dy) {
@@ -22288,7 +22298,7 @@ super_vertex();
                       };
 
                       updatetmat();
-                      app.root.transform.set_scale(0.13, 0.13, 0.13);
+                     // app.root.transform.set_scale(0.13, 0.13, 0.13);
                       fin.timers.start(function () {
 
                           if (!arController) {
@@ -22343,7 +22353,7 @@ super_vertex();
                           markerNum = arController.getMarkerNum();
 
                           if (markerNum > 0) {
-                              app.root.transform.set_scale(0.13, 0.13, 0.13);
+                              app.root.transform.set_scale(0.125, 0.125, 0.125);
                               if (markResult) {
                                   arController.getTransMatSquareCont(0, 1, markerMatrix, markerMatrix);
                               } else {
@@ -22412,7 +22422,7 @@ super_vertex();
           fin.urls_loader([["duct-system.obj"], ["duct-system.mtl"], ["human.gltf"]], function (datas) {
 
               var g = ge.geometry.shapes.obj.parse(datas[0], datas[1]);
-              g.scale_position_rotation(0.003, 0.003, 0.003, 0, 0, 0, -0.017453292519943295 * 90, 0, 0);
+              g.scale_position_rotation(0.03, 0.03, 0.03, 0, 0, 0, -0.017453292519943295 * 0, 0, 0);
               // g.scale_position_rotation(2, 2, 2, 0, 0, 0, 0, 0, 0)
               g.center_pivot(1, 1, 1, 0, 0, 0);
 
@@ -22423,11 +22433,14 @@ super_vertex();
 
               var mats = {
                   'beds': {
-                      cast_shadows: true
+                      cast_shadows: true,
+                      ambient: [0.1, 0.1, 0.1],
+                      diffuse: [0.5, 0.5, 0.5],
+                      specular: [0, 0, 0]
                   },
                   'box': {
                       transparent: 0.35,
-                      specular1: [2, 2, 2],
+                      specular: [2, 2, 2],
                       ambient: [0.82, 0.82, 0.82],
                       transparent_layer: 101,
                       diffuse: [0, 0, 0]
@@ -22440,12 +22453,12 @@ super_vertex();
                   },
                   "ventwalls": {
                       specular: [0, 0, 0],
-                      ambient: [33 / 256, 47 / 256, 60 / 256],
+                      ambient: [0.15, 0.15, 0.15],
                       diffuse1: [0, 0, 0]
                   },
                   "ventceil1": {
                       specular: [0, 0, 0],
-                      ambient: [33 / 256, 47 / 256, 60 / 256]
+                      ambient: [0.1, 0.1, 0.1],
                   }
 
               };
@@ -22582,7 +22595,13 @@ super_vertex();
                       l._pchange = _pchange;
                       l.style.left = (_pos1[0] / dapp.scale) + "px";
                       l.style.top = (_pos1[1] / dapp.scale) + "px";
-                      l.style.fontSize = (32 / dapp.scale) + 'px';
+                      if (is_mobile) {
+                          l.style.fontSize = (32 / dapp.scale) + 'px';
+                      }
+                      else {
+                          l.style.fontSize = (22 / dapp.scale) + 'px';
+                      }
+                      
                      // l.style.transform = "translate(" + _pos1[0] + 'px,' + _pos1[1] + 'px);';
 
                   }
