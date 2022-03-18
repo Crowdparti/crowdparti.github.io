@@ -5625,6 +5625,46 @@ gl_Position=u_view_projection_rw*gl_Position;
         return this;
       };
 
+
+      var S0$x,S0$y,S0$z,S0$qx,S0$qy,S0$qz,S0$qw,S0$A,S0$uvx,S0$uvy,S0$uvz,S0$uuvx,S0$uuvy,S0$uuvz;
+      var temp_pos = [0, 0, 0];
+
+
+      proto.transform_point = function (out, pos) {
+
+        temp_pos[0] = pos[0] * this.scale[0]; temp_pos[1] = pos[1] * this.scale[1]; temp_pos[2] = pos[2] * this.scale[2];
+
+        S0$x = temp_pos[0]; S0$y = temp_pos[1]; S0$z = temp_pos[2];
+      S0$qx = this.rot[0]; S0$qy = this.rot[1]; S0$qz = this.rot[2]; S0$qw = this.rot[3];
+
+
+      S0$uvx = S0$qy * S0$z - S0$qz * S0$y;
+      S0$uvy = S0$qz * S0$x - S0$qx * S0$z;
+      S0$uvz = S0$qx * S0$y - S0$qy * S0$x;
+
+
+      S0$uuvx = S0$qy * S0$uvz - S0$qz * S0$uvy;
+      S0$uuvy = S0$qz * S0$uvx - S0$qx * S0$uvz;
+      S0$uuvz = S0$qx * S0$uvy - S0$qy * S0$uvx;
+
+      
+      S0$A = S0$qw * 2;
+      S0$uvx *= S0$A;
+      S0$uvy *= S0$A;
+      S0$uvz *= S0$A;
+
+      S0$uuvx *= 2;
+      S0$uuvy *= 2;
+      S0$uuvz *= 2;
+
+      temp_pos[0] = S0$x + S0$uvx + S0$uuvx;
+      temp_pos[1] = S0$y + S0$uvy + S0$uuvy;
+      temp_pos[2] = S0$z + S0$uvz + S0$uuvz;
+
+        out[0] = temp_pos[0] + this.pos[0]; out[1] = temp_pos[1] + this.pos[1]; out[2] = temp_pos[2] + this.pos[2];
+
+      };
+
       var tid = 1;
 
       return function transform_object(sys) {
@@ -5634,6 +5674,12 @@ gl_Position=u_view_projection_rw*gl_Position;
         this.pos = new Float32Array(this.data.buffer, 0, 3);
         this.rot = new Float32Array(this.data.buffer, 12, 4);
         this.scale = new Float32Array(this.data.buffer, 28, 3);
+
+        this.scale[0] = 1;
+        this.scale[1] = 1;
+        this.scale[2] = 1;
+
+
         this.updated = false
         this.p = 0;
         this.sys = sys;
@@ -17093,14 +17139,17 @@ void fragment(void) {
 
 
     proto.resize = function () {
-      var rect = this.host.getBoundingClientRect();
-      this.renderer.set_canvas_size(rect.width, rect.height);
-      this.camera.ge_camera.update_aspect(rect.width / rect.height);
+      this.host_rect = this.host.getBoundingClientRect();
+
+      this.renderer.set_canvas_size(this.host_rect.width, this.host_rect.height);
+      this.camera.ge_camera.update_aspect(this.host_rect.width / this.host_rect.height);
     }
 
     proto.setup_host = function (host) {
       this.host = host;
       this.host.appendChild(this.renderer.canvas);
+      this.host_rect = this.host.getBoundingClientRect();
+
       setTimeout(function (self) {
         self.resize();
         self.renderer_ready = true;
@@ -17259,6 +17308,14 @@ void fragment(void) {
       return save_func;
       
     }
+
+
+    proto.world_to_screen = function (pos_out, pos_in) {
+      math.vec3.transform_mat4(pos_out, pos_in, this.camera.ge_camera.view_projection);
+      pos_out[0] = ((pos_out[0] + 1) / 2) * this.host_rect.width;
+      pos_out[1] = ((1 - pos_out[1]) / 2) * this.host_rect.height;
+      return pos_out;
+    };
 
     function ge_render_system(def) {
       _super.apply(this, arguments);      
@@ -21400,9 +21457,27 @@ _FM["myapp"]=new Object();
               return a * 0.017453292519943295;
           }
 
-          var dapp = html.elm$('<div style="width:100%;height:calc(100%);position:absolute;left:0%;top:0%;"></div>');
+          var dapp = html.elm$('<div style="width:100%;height:calc(100%);position:absolute;left:0;top:0;overflow:hidden"></div>');
           document.body.style.overflow = "hidden";
           document.body.appendChild(dapp);
+
+          dapp.set_size = function (ww, hh) {
+            
+              var ra = (window.innerWidth / ww);
+
+
+
+              this.style.width = ww + "px";
+              this.style.height = hh + "px";
+              this.style.transform = "scale(" + ra + ")";
+              this.style.transformOrigin = "left top";
+              dapp.scale = ra;
+          }
+
+          setTimeout(function () {
+
+              dapp.set_size(window.innerWidth / 2, window.innerHeight / 2);
+          }, 10);
           var app = new ge.app({
               renderer: {
                   pixel_ratio: 1
@@ -21429,6 +21504,8 @@ _FM["myapp"]=new Object();
           ];
 
           app.root.eular = [0, 0, 0];
+
+
 
           var mouse_drage = null;
           app.attach_component(camera, 'ge_mouse_camera_controller', {
@@ -22145,6 +22222,7 @@ super_vertex();
                       dapp.style.height = video.videoHeight + "px";
                       dapp.style.transform = "scale(" + ra + ")";
                       dapp.style.transformOrigin = "left top";
+                      dapp.scale = ra;
                       setTimeout(function () {
                           app.render_system.resize();
                       }, 100);
@@ -22391,18 +22469,23 @@ super_vertex();
 
 
 
-
+              var objects = {};
               var renderables = [];
               g.obj_meta.meshes.forEach(function (ms) {
-                  // if (ms.mat == "box") return;
-                  renderables.push(new ge.geometry.mesh({
+
+                  var m = new ge.geometry.mesh({
                       geometry: g,
                       material: materials[ms.mat] || (new ge.shading.shaded_material({})),
                       draw_offset: ms.draw_offset,
                       draw_count: ms.draw_count,
 
-                  }));
+                  });
+                  objects[ms.name] = m;
+                  m.origin = g.find_origin(ms.draw_offset, ms.draw_count);
+                  renderables.push(m);
               });
+
+              console.log(objects);
 
 
               var human = gltf.get_meshes(JSON.parse(datas[2]))[0];
@@ -22452,6 +22535,76 @@ super_vertex();
               e.transform.set_parent(app.root.transform);
               console.log(app.root);
               console.log(meshes);
+
+              document.body.appendChild(html.elm$('<style>body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:80px;margin-left:-40px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
+             
+              var label_lines = new ge.debug.lines();
+              var label_points = new ge.debug.points();
+              var labels = [];
+              console.log(labels);
+              function add_label(x1, y1, z1, x2, y2, z2) {
+                
+
+                  var l = html.elm$('<div class="label_anchor">wrer</div>');
+                  l.p1 = [x1, y1, z1];
+                  l.p2 = [x2, y2, z2];
+
+                  dapp.appendChild(l);
+
+                  labels.push(l);
+                  return l;
+              }
+
+              add_label(0, 5, 0, 8, 8, 0).innerHTML="Main Chamber";
+              add_label(-6, 2.5, 5, -12, 5, 5).innerHTML = "UV Lights";
+              add_label(8, -6, 5, 12, -5, 5).innerHTML = "Air Intake";
+
+              var _pchange="", _pos1 = [0, 0, 0], _pos2 = [0, 0, 0];
+              function proces_label(l) {
+
+                 
+                  label_lines.set_color(1, 1, 0);
+                  label_lines.add_vec3(l.p1, l.p2);
+
+                  label_points.add_vec3(l.p1, 1, 1, 1, 10);
+                  label_points.add_vec3(l.p2, 1, 0, 0, 10);
+
+                  app.root.transform.transform_point(_pos2, l.p2);
+
+                  app.render_system.world_to_screen(_pos1, _pos2);
+
+                  _pos1[0] = Math.floor(_pos1[0]);
+                  _pos1[1] = Math.floor(_pos1[1]);
+
+                  
+                  _pchange = _pos1[0] + 'x' + _pos1[1];
+                  if (l._pchange !== _pchange) {
+                      l._pchange = _pchange;
+                      l.style.left = (_pos1[0] / dapp.scale) + "px";
+                      l.style.top = (_pos1[1] / dapp.scale) + "px";
+                      l.style.fontSize = (32 / dapp.scale) + 'px';
+                     // l.style.transform = "translate(" + _pos1[0] + 'px,' + _pos1[1] + 'px);';
+
+                  }
+
+                 
+
+
+              }
+              
+
+              app.root.ge_renderable.items.push(label_lines);
+
+              app.root.ge_renderable.items.push(label_points);
+
+              fin.timers.start(function () {
+                  label_lines.clear();
+                  label_points.clear();
+
+                 
+                  labels.forEach(proces_label);
+
+              }, 1 / 5);
 
 
           });
