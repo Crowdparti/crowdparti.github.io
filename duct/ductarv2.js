@@ -21466,7 +21466,7 @@ _FM["myapp"]=new Object();
               var ra = (window.innerWidth / ww);
 
 
-
+              
               this.style.width = ww + "px";
               this.style.height = hh + "px";
               this.style.transform = "scale(" + ra + ")";
@@ -21476,13 +21476,13 @@ _FM["myapp"]=new Object();
 
           setTimeout(function () {
               if (is_mobile) {
-                  dapp.set_size(window.innerWidth / 2, window.innerHeight / 2);
+                  dapp.set_size(window.innerWidth /2, window.innerHeight / 2);
               }
               else {
                   dapp.set_size(window.innerWidth , window.innerHeight );
               }
               
-          }, 10);
+          }, 50);
           var app = new ge.app({
               renderer: {
                   pixel_ratio: 1
@@ -21553,7 +21553,8 @@ _FM["myapp"]=new Object();
               camera.set_position({ "pos": [0, 0, 23.7599], "eular": [0, 0, 0] });
 
           }
-         
+
+          document.body.appendChild(html.elm$('<style>.button {position: absolute;top: 30px;left: 50%;margin-left: -100px;width: 200px;height: 56px;background: url(buttons.png) no-repeat;background-size: cover;transform: scale(' + (is_mobile ? 2 : 1) + ');transform-origin: center top;} .duct_is_off_button {background-position-y: -57px;} .duct_is_on_button {background-position-y: 0px;} .ar_button {background-position-y: -116px;left:50%;top:50%; height:120px;margin-left:-100px;margin-top:-60px} body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:80px;margin-left:-40px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
 
           app.create_renderable(new ge.shading.light({
               intensity: 1,
@@ -22199,16 +22200,18 @@ super_vertex();
               renderables.push(uvmesh);
 
 
-              var btn = html.elm$('<button  style="font-size:150%;position:absolute;right:10px;top:10px;width:200px;">DUCT SYSTEM ENABLED</button>')
-
-              document.body.appendChild(btn);
-              btn.onclick = function () {
+              //var btn = html.elm$('<button  style="font-size:150%;position:absolute;right:10px;top:10px;width:200px;">DUCT SYSTEM ENABLED</button>')
+              var btnSystem = html.elm$('<div class="button duct_is_off_button"></div>');
+              document.body.appendChild(btnSystem);
+              btnSystem.onclick = function () {
 
                   if (app.set_system_working(!app.system_working)) {
-                      btn.innerHTML = "DUCT SYSTEM ENABLED";
+                      btnSystem.classList.add("duct_is_on_button");
+                     // btn.innerHTML = "DUCT SYSTEM ENABLED";
                   }
                   else {
-                      btn.innerHTML = "DUCT SYSTEM DISABLED";
+                      btnSystem.classList.remove("duct_is_on_button");
+                    //  btn.innerHTML = "DUCT SYSTEM DISABLED";
                   }
               }
 
@@ -22376,11 +22379,9 @@ super_vertex();
                               tmat[12] = tmpMat[12];
                               tmat[13] = tmpMat[13];
                               tmat[14] = tmpMat[14];
-                              meshes.forEach(function (m) {
 
-                                  //m.matrix_world = tmat;
 
-                              });
+
                               app.root.transform.set_pos(tmpMat[12], tmpMat[13], tmpMat[14]);
                               // math.mat4.multiply(tmpMat, tmpMat, tmat);
                               //math.mat4.get_rotation(qu1, tmpMat);
@@ -22408,7 +22409,8 @@ super_vertex();
 
               }
 
-              var btnAR = html.elm$('<button  style="font-size:300%;position:absolute;left:50%;top:50%;width:200px;margin-left:-100px">OPEN AR</button>')
+             // var btnAR = html.elm$('<button  style="font-size:300%;position:absolute;left:50%;top:50%;width:200px;margin-left:-100px">OPEN AR</button>')
+              var btnAR = html.elm$('<div class="button ar_button"></div>');
 
               document.body.appendChild(btnAR);
               btnAR.onclick = function () {
@@ -22549,7 +22551,6 @@ super_vertex();
               console.log(app.root);
               console.log(meshes);
 
-              document.body.appendChild(html.elm$('<style>body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:80px;margin-left:-40px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
              
               var label_lines = new ge.debug.lines();
               var label_points = new ge.debug.points();
@@ -22568,9 +22569,9 @@ super_vertex();
                   return l;
               }
 
-              add_label(0, 5, 0, 8, 8, 0).innerHTML="Main Chamber";
-              add_label(-6, 2.5, 5, -12, 5, 5).innerHTML = "UV Lights";
-              add_label(8, -6, 5, 12, -5, 5).innerHTML = "Air Intake";
+              add_label(0, 5, 0, 2, 8, 0).innerHTML="Main Chamber";
+              add_label(-6, 2.5, 5, -6.5, 5, 5).innerHTML = "UV Lights";
+              add_label(8, -6, 5, 7.5, -7, 5).innerHTML = "Air Intake";
 
               var _pchange="", _pos1 = [0, 0, 0], _pos2 = [0, 0, 0];
               function proces_label(l) {
