@@ -17452,13 +17452,13 @@ void fragment(void) {
       math.quat.mult(temp_quat, rotation_world, this.rotation)
       math.mat4.from_quat(this.matrix_world, temp_quat);
 
-      temp_vec3[0] = scale_world[0] * this.scale[0];
-      temp_vec3[1] = scale_world[1] * this.scale[1];
-      temp_vec3[2] = scale_world[2] * this.scale[2];
+      temp_vec3[0] = scale_world[0] * this.scale[0]; temp_vec3[1] = scale_world[1] * this.scale[1]; temp_vec3[2] = scale_world[2] * this.scale[2];
+
+      temp_pos[0] = this.position[0] * scale_world[0]; temp_pos[1] = this.position[1] * scale_world[1]; temp_pos[2] = this.position[2] * scale_world[2];
 
       math.mat4.scale(this.matrix_world, temp_vec3);
 
-      S0$x = this.position[0]; S0$y = this.position[1]; S0$z = this.position[2];
+      S0$x = temp_pos[0]; S0$y = temp_pos[1]; S0$z = temp_pos[2];
       S0$qx = rotation_world[0]; S0$qy = rotation_world[1]; S0$qz = rotation_world[2]; S0$qw = rotation_world[3];
 
 
@@ -21554,7 +21554,7 @@ _FM["myapp"]=new Object();
 
           }
 
-          document.body.appendChild(html.elm$('<style>.button {position: absolute;top: 30px;left: 50%;margin-left: -100px;width: 200px;height: 56px;background: url(buttons.png) no-repeat;background-size: cover;transform: scale(' + (is_mobile ? 2 : 1) + ');transform-origin: center top;} .duct_is_on_button {background-position-y: 0px;}  .duct_is_off_button {background-position-y: -57px;} .ar_button {background-position-y: -116px;left:50%;top:50%; height:120px;margin-left:-100px;margin-top:-60px} body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:80px;margin-left:-40px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
+          document.body.appendChild(html.elm$('<style>.button {position: absolute;top: 30px;left: 50%;margin-left: -100px;width: 200px;height: 56px;background: url(buttons.png) no-repeat;background-size: cover;transform: scale(' + (is_mobile ? 2 : 1) + ');transform-origin: center top;} .duct_is_on_button {background-position-y: 0px;}  .duct_is_off_button {background-position-y: -57px;} .ar_button {background-position-y: -116px;left:50%;top:50%; height:120px;margin-left:-100px;margin-top:-60px} body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:110px;margin-left:-55px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
 
           app.create_renderable(new ge.shading.light({
               intensity: 1,
@@ -21620,7 +21620,7 @@ _FM["myapp"]=new Object();
                               ins.dz = v3[2] * 1;
 
 
-
+                              console.log("tins",ins);
                               return ins;
                           }
                       });
@@ -21633,7 +21633,7 @@ _FM["myapp"]=new Object();
                           }
                       }
                       proto.trigger_instance = function (ins, sys) {
-
+                          
                           if (ins.type === 1) {
                               if (sys.system_working) {
                                   for (i = 0; i < 20; i++) {
@@ -21666,29 +21666,26 @@ _FM["myapp"]=new Object();
 
                               }
                           }
-                          else if (ins.type === 3) {
+
+                           else if (ins.type === 4) {
                               if (!sys.system_working) return;
-                              for (i = 0; i < 10; i++) {
+                              for (i = 0; i < 2; i++) {
                                   par = sys.queue_particle(ins.emi.get_particle(ins), 0, ins.id, ins.par_life);
 
                                   ar = agrid[Math.floor(Math.random() * agrid.length)];
 
                                   par[3] = ins.x + ar[0];
-                                  par[4] = ins.y+2;
+                                  par[4] = ins.y;
                                   par[5] = ins.z + ar[1];
 
-                                  par[3] += (Math.random() - 0.5);
-                                  par[5] += (Math.random() - 0.5);
-
-
                                   par[6] = (Math.random() - 0.5) * 2;
-                                  par[7] = -20;
+                                  par[7] = -10;
                                   par[8] = (Math.random() - 0.5) * 2;
-
 
 
                               }
                           }
+                          
 
 
                       };
@@ -21703,7 +21700,7 @@ _FM["myapp"]=new Object();
                           par[7] = ins.dy + (Math.random() - 0.5) * 0.65;
                           par[8] = ins.dz + (Math.random() - 0.5) * 0.65;
 
-                          if (ins.type === 1 && sys.system_working) {
+                          if (ins.type === 1  && sys.system_working) {
                               par[6] = ins.dx + (Math.random() - 0.5) * 2.65;
                               par[7] = ins.dy + (Math.random() - 0.5) * 2.65;
                               par[8] = ins.dz + (Math.random() - 0.5) * 2.65;
@@ -21796,6 +21793,10 @@ _FM["myapp"]=new Object();
 
                       var pdist, pdir = [0, 0,0], pow, dd,si=0,suc;
                       proto.update_particle = function (par, ins, time_delta) {
+                          par[9]=par[3];
+                          par[10]=par[4];
+                          par[11]=par[5];
+
                           par[3] += par[6] * time_delta;
                           par[4] += par[7] * time_delta;
                           par[5] += par[8] * time_delta;
@@ -21821,7 +21822,7 @@ _FM["myapp"]=new Object();
                           par[8] *= (0.995);
 
                           if (!sys.system_working) {
-                              if (ins.type === 2) {
+                              if (ins.type >1) {
                                   par[2] = 0.5;
                                   return;
                               }
@@ -21835,7 +21836,7 @@ _FM["myapp"]=new Object();
                               pdir[1] = suc.y - par[4];
                               pdir[2] = suc.z - par[5];
 
-                              if (suc.type === 2) {
+                              if (suc.type >1) {
                                   dd = pdir[1] * pdir[1] + pdir[2] * pdir[2];
                               }
                               else {
@@ -21860,7 +21861,7 @@ _FM["myapp"]=new Object();
 
                               pow = suc.pow / pdist;
 
-                              if (suc.type === 2) {
+                              if (suc.type>1) {
                                   par[7] += (pdir[1] * pow) * time_delta;
                                   par[8] += (pdir[2] * pow) * time_delta;
                               }
@@ -21883,25 +21884,7 @@ _FM["myapp"]=new Object();
                       };
 
 
-
-                      proto.output = function (dt, oi, sys) {
-
-
-                          oi = sys.start_output(11000);
-                          dt[oi++] = 5;
-                          i = 0;
-
-                          while (i < this.active_particles.length) {
-                              par = this.active_particles.data[i++];
-
-                              dt[oi++] = sys.instances[par[0]].client_id;
-                              dt[oi++] = (sys.time - par[1]) / par[2];
-                              dt[oi++] = par[3];
-                              dt[oi++] = par[4];
-                              dt[oi++] = par[5];
-                          }
-                          sys.finish_output(oi);
-                      };
+                                          
 
                       proto.output = function (dt, oi, sys) {
 
@@ -21917,11 +21900,43 @@ _FM["myapp"]=new Object();
                               dt[oi++] = sys.instances[par[0]].client_id;
                           }
                           sys.finish_output(oi);
+
+
+                          oi = sys.start_output(12000);
+                          i = 0;
+
+                          while (i < this.active_particles.length) {
+                              par = this.active_particles.data[i++];                            
+                              if(sys.instances[par[0]].type===4 ){
+                                  dt[oi++] = par[3];
+                              dt[oi++] = par[4];
+                              dt[oi++] = par[5];
+                              }
+                              
+                          }
+                          sys.finish_output(oi);
+
+                          oi = sys.start_output(13000);
+                          i = 0;
+
+                          while (i < this.active_particles.length) {
+                              par = this.active_particles.data[i++];
+                              if (sys.instances[par[0]].type === 4) {
+                                  dt[oi++] = par[9];
+                                  dt[oi++] = par[10];
+                                  dt[oi++] = par[11];
+                              }
+
+                          }
+                          sys.finish_output(oi);
+
+                         
+
                       }
 
                       return function duct_physical_particles() {
                           _super.call(this);
-                          this.particle_size = 9;
+                          this.particle_size = 12;
 
                       }
 
@@ -22058,6 +22073,93 @@ gl_FragColor.w*=v_par_color.w;
                   
               });
               meshes.push(pmesh);
+
+              var armesh= new ge.geometry.mesh({
+              geometry:ge.geometry.shapes.plane(),
+                  material: new ge.shading.material({
+                      transparent: 0.9,
+                      transparent_layer1: 200,
+                      texture: ge.webgl.texture.from_url("arrow_right_2.png", true),
+                      both_sides: true,
+                      render_mesh: function (renderer, shader, mesh) {
+                          if (this.instances_count < 2) return;
+
+                          if (this.flags & 1024) {
+          renderer.gl_disable(2929);
+        }
+        else {
+          renderer.gl_enable(2929);
+        }
+        if ((this.flags & 2048) !== 0) {
+          renderer.gl_disable(2884);
+        }
+        else {
+          renderer.gl_enable(2884);
+        }
+
+                          uni = shader.uniforms["u_object_material_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = this.object_material;
+        uni.func.apply(shader.gl, uni.params);
+      }
+                          uni = shader.uniforms["u_texture_matrix_rw"];
+      if (uni) {
+        uni.params[uni.params_length] = this.texture_matrix;
+        uni.func.apply(shader.gl, uni.params);
+      }
+
+                          renderer.gl.depthMask(false);
+                          renderer.use_texture(this.texture, 0);
+
+                          this.final_draw_count = mesh.draw_count || mesh.geometry.num_items;
+
+                          this.draw_elements = renderer.activate_geometry_index_buffer(mesh.geometry, this.wireframe);
+
+                          // this.complete_render_mesh(renderer, shader, mesh);
+                          //console.log("this.instances_count", this.instances_count);
+                          renderer.gl.ANGLE_instanced_arrays.drawElementsInstancedANGLE(this.draw_type, this.final_draw_count, 5125, 0, this.instances_count);
+                          renderer.gl.depthMask(true);
+                      },
+                  })
+              });
+              armesh.geometry.add_instance_attribute("arrow_pos",3,1000);
+              armesh.geometry.add_instance_attribute("arrow_last_pos",3,1000);
+
+              armesh.material.shader = armesh.material.shader.extend(`
+
+              attribute vec3 arrow_pos;
+attribute vec3 arrow_last_pos;
+              vec4 att_position(void){
+
+vec4 pos=vec4(a_position_rw,1.0);
+
+float a=atan(arrow_pos.x-arrow_last_pos.x,arrow_pos.y-arrow_last_pos.y);
+
+float y=cos(a)*pos.x-sin(a)*pos.y;
+float x=sin(a)*pos.x-cos(a)*pos.y;
+
+pos.x=x+arrow_pos.x;
+pos.y=y+arrow_pos.y;
+pos.z+=arrow_pos.z;
+
+
+
+
+    return pos;
+}
+              void vertex(){
+super_vertex();
+
+
+}
+              
+              `)
+
+
+              renderables.push(armesh);
+
+
+
               var si = 0, ssi = 0, pdata, psize;
               var ppos = pmesh.geometry.attributes.a_position_rw;
 
@@ -22068,12 +22170,44 @@ gl_FragColor.w*=v_par_color.w;
                   app.render_system.renderer.gl.bindBuffer(34962, ppos.buffer);
                   app.render_system.renderer.gl.bufferData(34962,
                       pdata, 35048, 0, pdata.length);
-                  pmesh.draw_count = pdata.length / 4;
+                  pmesh.draw_count = pdata.length / 4;                                 
+
+
+              });
+
+
+
+               pas.output(12000, function (dt, oi, count) {
+                  if (!armesh.geometry.attributes.arrow_pos.buffer) return;
+                  pdata = new Float32Array(dt.buffer, oi * 4, count - oi);
+                  app.render_system.renderer.gl.bindBuffer(34962, armesh.geometry.attributes.arrow_pos.buffer);
+                  app.render_system.renderer.gl.bufferData(34962,
+                      pdata, 35048, 0, pdata.length);
+
+                      armesh.material.instances_count= pdata.length / 3;    
+               });
+
+              pas.output(13000, function (dt, oi, count) {
+                  if (!armesh.geometry.attributes.arrow_last_pos.buffer) return;
+                  pdata = new Float32Array(dt.buffer, oi * 4, count - oi);
+                  app.render_system.renderer.gl.bindBuffer(34962, armesh.geometry.attributes.arrow_last_pos.buffer);
+                  app.render_system.renderer.gl.bufferData(34962,
+                      pdata, 35048, 0, pdata.length);
+
               });
 
 
 
               renderables.push(pmesh);
+
+
+               pas.spawn_emitter_instance(1000, 1, [0.02, -1, 3, 2,
+                  -8.4, 2.2, -5.85, 0, 0, 0]);
+
+                  pas.spawn_emitter_instance(1000, 1, [0.05, -1, 3, 4,
+                  -8.4, 2.2, -5.85, 0, 0, 0]);
+
+
               pas.spawn_emitter_instance(1000, 0, [4, -1, 2, 1,
                   -2.6, -1.5, 5.25, -1.8, -1.75, 5.55]);
 
@@ -22082,11 +22216,14 @@ gl_FragColor.w*=v_par_color.w;
                   pas.spawn_emitter_instance(1000, 0, [4, -1, 3, 1,
                       2.6, -1.5, 5.25, 1.8, -1.75, 5.55]);
 
+
+                     
+
               }, 4000);
 
 
-              pas.spawn_emitter_instance(1000, 1, [0.02, -1, 3, 2,
-                  -8.4, 2.2, -5.85, 0, 0, 0]);
+              
+
 
                            
              
@@ -22175,7 +22312,7 @@ super_vertex();
                   return uvmesh;
               }
 
-              var uvmesh= setup_uv();
+             // var uvmesh= setup_uv();
               app.system_working = false;
               pas.worker.commands_group(function (self, cmd, worker) {
 
@@ -22185,10 +22322,10 @@ super_vertex();
                       cmd[ci++] = s ? 1 : 2;
                       worker.finish_command(ci);
                       if (s) {
-                          uvmesh.on();
+                         // uvmesh.on();
                       }
                       else {
-                          uvmesh.off();
+                        //  uvmesh.off();
                       }
                       return s;
                   };
@@ -22197,7 +22334,7 @@ super_vertex();
 
               }, this);
 
-              renderables.push(uvmesh);
+              //renderables.push(uvmesh);
 
 
               //var btn = html.elm$('<button  style="font-size:150%;position:absolute;right:10px;top:10px;width:200px;">DUCT SYSTEM ENABLED</button>')
@@ -22409,7 +22546,7 @@ super_vertex();
 
               }
 
-             // var btnAR = html.elm$('<button  style="font-size:300%;position:absolute;left:50%;top:50%;width:200px;margin-left:-100px">OPEN AR</button>')
+
               var btnAR = html.elm$('<div class="button ar_button"></div>');
 
               document.body.appendChild(btnAR);
@@ -22569,9 +22706,9 @@ super_vertex();
                   return l;
               }
 
-              add_label(0, 5, 0, 2, 8, 0).innerHTML="Main Chamber";
-              add_label(-6, 2.5, 5, -6.5, 5, 5).innerHTML = "UV Lights";
-              add_label(8, -6, 5, 7.5, -7, 5).innerHTML = "Air Intake";
+              add_label(0, 5, 0, 2, 8, 0).innerHTML="Air Conditioner";
+              add_label(-6, 2.5, 5, -6.5, 5, 5).innerHTML = "Main Chamber";
+              add_label(8, -6, 5, 7.5, -7, 5).innerHTML = "Air Exhuast";
 
               var _pchange="", _pos1 = [0, 0, 0], _pos2 = [0, 0, 0];
               function proces_label(l) {
