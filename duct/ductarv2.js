@@ -21579,7 +21579,7 @@ _FM["myapp"]=new Object();
           });
 
           var meshes = [];
-
+          var objects = {};
           function setup_system(renderables) {
               var pas = app.use_system("particles_system");
               pas.extend(function (sys) {
@@ -22075,12 +22075,13 @@ gl_FragColor.w*=v_par_color.w;
               meshes.push(pmesh);
 
               var armesh= new ge.geometry.mesh({
-              geometry:ge.geometry.shapes.plane(),
+                  geometry: ge.geometry.shapes.plane({size:0.65}),
                   material: new ge.shading.material({
-                      transparent: 0.9,
+                      transparent: 0.5,
                       transparent_layer1: 200,
                       texture: ge.webgl.texture.from_url("arrow_right_2.png", true),
                       both_sides: true,
+                      
                       render_mesh: function (renderer, shader, mesh) {
                           if (this.instances_count < 2) return;
 
@@ -22117,8 +22118,11 @@ gl_FragColor.w*=v_par_color.w;
 
                           // this.complete_render_mesh(renderer, shader, mesh);
                           //console.log("this.instances_count", this.instances_count);
+
+                          //renderer.gl_blendEquation(32779);
                           renderer.gl.ANGLE_instanced_arrays.drawElementsInstancedANGLE(this.draw_type, this.final_draw_count, 5125, 0, this.instances_count);
                           renderer.gl.depthMask(true);
+                          //renderer.gl_blendEquation(32774);
                       },
                   })
               });
@@ -22129,6 +22133,9 @@ gl_FragColor.w*=v_par_color.w;
 
               attribute vec3 arrow_pos;
 attribute vec3 arrow_last_pos;
+
+uniform vec3 u_view_sd;
+uniform vec3 u_view_up;
               vec4 att_position(void){
 
 vec4 pos=vec4(a_position_rw,1.0);
@@ -22150,6 +22157,11 @@ pos.z+=arrow_pos.z;
               void vertex(){
 super_vertex();
 
+}
+void fragment(void) {
+super_fragment();
+
+gl_FragColor.rgb=vec3(1.0)-gl_FragColor.rgb;
 
 }
               
@@ -22209,12 +22221,12 @@ super_vertex();
 
 
               pas.spawn_emitter_instance(1000, 0, [4, -1, 2, 1,
-                  -2.6, -1.5, 5.25, -1.8, -1.75, 5.55]);
+                  -3.6, -1.5, 5.25, -1.8, -1.75, 5.55]);
 
               setTimeout(function () {
 
                   pas.spawn_emitter_instance(1000, 0, [4, -1, 3, 1,
-                      2.6, -1.5, 5.25, 1.8, -1.75, 5.55]);
+                      3.6, -1.5, 5.25, 1.8, -1.75, 5.55]);
 
 
                      
@@ -22322,9 +22334,11 @@ super_vertex();
                       cmd[ci++] = s ? 1 : 2;
                       worker.finish_command(ci);
                       if (s) {
+                          objects['airconditioner_airconditioner_airconditioner'].material.set_ambient(0.7, 0.5, 0.8);
                          // uvmesh.on();
                       }
                       else {
+                          objects['airconditioner_airconditioner_airconditioner'].material.set_ambient(0.3, 0.2, 0.2);
                         //  uvmesh.off();
                       }
                       return s;
@@ -22598,6 +22612,10 @@ super_vertex();
                   "ventceil1": {
                       specular: [0, 0, 0],
                       ambient: [0.1, 0.1, 0.1],
+                  },
+                  "airconditioner": {
+                      specular: [0, 0, 0],
+                      ambient: [0.3, 0.2, 0.2],
                   }
 
               };
@@ -22621,7 +22639,7 @@ super_vertex();
 
 
 
-              var objects = {};
+             
               var renderables = [];
               g.obj_meta.meshes.forEach(function (ms) {
 
@@ -22651,8 +22669,8 @@ super_vertex();
               var human_geo1 = human_geo.clone();
               var human_geo2 = human_geo.clone();
 
-              human_geo1.scale_position_rotation(1, 1, 1, -3, -5.9, 5, 0, 1, 0);
-              human_geo2.scale_position_rotation(1, 1, 1, 3, -5.9, 5, 0, -1, 0);
+              human_geo1.scale_position_rotation(1, 1, 1, -4, -5.9, 5, 0, 1, 0);
+              human_geo2.scale_position_rotation(1, 1, 1, 4, -5.9, 5, 0, -1, 0);
 
 
               renderables.push(new ge.geometry.mesh({
