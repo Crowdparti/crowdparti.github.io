@@ -21581,6 +21581,7 @@ _FM["myapp"]=new Object();
           var meshes = [];
           var objects = {};
           function setup_system(renderables) {
+              
               var pas = app.use_system("particles_system");
               pas.extend(function (sys) {
 
@@ -21669,7 +21670,7 @@ _FM["myapp"]=new Object();
 
                            else if (ins.type === 4) {
                               if (!sys.system_working) return;
-                              for (i = 0; i < 2; i++) {
+                              for (i = 0; i < 1; i++) {
                                   par = sys.queue_particle(ins.emi.get_particle(ins), 0, ins.id, ins.par_life);
 
                                   ar = agrid[Math.floor(Math.random() * agrid.length)];
@@ -21970,8 +21971,7 @@ _FM["myapp"]=new Object();
                       transparent_layer: 100,
                       texture: ge.webgl.texture.from_url("smoke.png", true,256),
                       render_mesh: function (renderer, shader, mesh) {
-
-
+                          if (mesh.draw_count < 1) return;
                           if (this.flags & 1024) {
           renderer.gl_disable(2929);
         }
@@ -22083,7 +22083,11 @@ gl_FragColor.w*=v_par_color.w;
                       both_sides: true,
                       
                       render_mesh: function (renderer, shader, mesh) {
+
+
                           if (this.instances_count < 2) return;
+                          this.final_draw_count = mesh.draw_count || mesh.geometry.num_items;
+                          if (this.final_draw_count < 1) return;
 
                           if (this.flags & 1024) {
           renderer.gl_disable(2929);
@@ -22112,7 +22116,7 @@ gl_FragColor.w*=v_par_color.w;
                           renderer.gl.depthMask(false);
                           renderer.use_texture(this.texture, 0);
 
-                          this.final_draw_count = mesh.draw_count || mesh.geometry.num_items;
+                          
 
                           this.draw_elements = renderer.activate_geometry_index_buffer(mesh.geometry, this.wireframe);
 
@@ -22182,8 +22186,7 @@ gl_FragColor.rgb=vec3(1.0)-gl_FragColor.rgb;
                   app.render_system.renderer.gl.bindBuffer(34962, ppos.buffer);
                   app.render_system.renderer.gl.bufferData(34962,
                       pdata, 35048, 0, pdata.length);
-                  pmesh.draw_count = pdata.length / 4;                                 
-
+                  pmesh.draw_count = pdata.length / 4;             ;
 
               });
 
@@ -22216,8 +22219,7 @@ gl_FragColor.rgb=vec3(1.0)-gl_FragColor.rgb;
                pas.spawn_emitter_instance(1000, 1, [0.02, -1, 3, 2,
                   -8.4, 2.2, -5.85, 0, 0, 0]);
 
-                  pas.spawn_emitter_instance(1000, 1, [0.05, -1, 3, 4,
-                  -8.4, 2.2, -5.85, 0, 0, 0]);
+                  pas.spawn_emitter_instance(1000, 1, [0.05, -1, 3, 4,                  -8.4, 2.2, -5.85, 0, 0, 0]);
 
 
               pas.spawn_emitter_instance(1000, 0, [4, -1, 2, 1,
@@ -22334,11 +22336,11 @@ super_vertex();
                       cmd[ci++] = s ? 1 : 2;
                       worker.finish_command(ci);
                       if (s) {
-                          objects['airconditioner_airconditioner_airconditioner'].material.set_ambient(0.7, 0.5, 0.8);
+                          objects['airconditioner'].material.set_ambient(0.7, 0.5, 0.8);
                          // uvmesh.on();
                       }
                       else {
-                          objects['airconditioner_airconditioner_airconditioner'].material.set_ambient(0.3, 0.2, 0.2);
+                          objects['airconditioner'].material.set_ambient(0.3, 0.2, 0.2);
                         //  uvmesh.off();
                       }
                       return s;
@@ -22691,6 +22693,23 @@ super_vertex();
                   }),
               }));
 
+              airconditioner = ge.geometry.shapes.cube({ width: 6, height: 2,depth:4 });
+
+              airconditioner.scale_position_rotation(1, 1, 1,
+                  -0.15, 4.54, 0.151,
+
+                  0, 0, 0);
+
+              airconditioner_mesh = new ge.geometry.mesh({
+                  geometry: airconditioner,
+                  material: new ge.shading.shaded_material({
+                      ambient: [1, 0, 0],
+
+                  }),
+              });
+              objects['airconditioner'] = airconditioner_mesh;
+              renderables.push(airconditioner_mesh);
+              meshes.push(airconditioner_mesh);
 
 
               setup_system(renderables);
