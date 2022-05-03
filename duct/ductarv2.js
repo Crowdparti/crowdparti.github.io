@@ -21554,7 +21554,7 @@ _FM["myapp"]=new Object();
 
           }
 
-          document.body.appendChild(html.elm$('<style>.button {position: absolute;top: 30px;left: 50%;margin-left: -100px;width: 200px;height: 56px;background: url(buttons.png) no-repeat;background-size: cover;transform: scale(' + (is_mobile ? 2 : 1) + ');transform-origin: center top;} .duct_is_on_button {background-position-y: 0px;}  .duct_is_off_button {background-position-y: -57px;} .ar_button {background-position-y: -116px;left:100px;top:100px; height:120px;margin-left:-100px;margin-top:-60px;transform:scale(0.75);} body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:110px;margin-left:-55px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
+          document.body.appendChild(html.elm$('<style>.button {position: absolute;top: 30px;left: 50%;margin-left: -100px;width: 200px;height: 56px;background: url(buttons.png) no-repeat;background-size: cover;transform: scale(' + (is_mobile ? 2 : 1) + ');transform-origin: center top;} .duct_is_on_button {background-position-y: 0px;}  .duct_is_off_button {background-position-y: -57px;} .ar_button {background-position-y: -116px;left:100px;top:100px; height:120px;margin-left:-100px;margin-top:-60px;transform:scale(0.85);} body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:110px;margin-left:-55px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
 
           app.create_renderable(new ge.shading.light({
               intensity: 1,
