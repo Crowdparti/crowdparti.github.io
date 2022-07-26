@@ -21522,7 +21522,7 @@ _FM["myapp"]=new Object();
           document.body.appendChild(html.elm$('<style>body{overflow:hidden;}  .button {margin-bottom:' + (is_mobile ? 80 : 10) + 'px;opacity: 0.35; border:none;width:200px;height: 56px;background: url(buttons.png) no-repeat;background-size: cover;transform: scale(' + (is_mobile ? 2 : 1) + ');transform-origin: right top;} .selected_button {opacity: 1;} .idle_button {background-position-y: 0px;}  .power_button {background-position-y: -57px;} .data_button {background-position-y: -115px;} .ar_button {position:absolute;opacity:1; background-position-y: -176px;left:50%;top:50%; height:105px;margin-left:unset;margin-top:-60px} body{overflow:hidden;} .label_anchor {font-size: 120%;transition: 0.25s ease-out; text-align:center;color:white;pointer-events:none; position:absolute;background-color:#656565;padding:5px;width:80px;margin-left:-40px;margin-top:-10px;opacity: 0.9;border-radius: 4px;} </style>'));
 
 
-         document.onmouseup = app.render_system.camera_state(true);
+         document.onmouseup = app.render_system.camera_state(false);
          // camera.set_position({ "pos": [-0.578000009059906, 0.8335222005844116, 64.32567596435547], "eular": [0.015, -3.6754e-15, 0] });
                  
 
@@ -22356,7 +22356,7 @@ gl_FragColor=u_draw_color;
 
           app.start(function () {
 
-          }, is_mobile ? (1 / 40) : (1 / 20));
+          }, is_mobile ? (1 / 24) : (1 / 40));
 
       }})().apply(_FM["myapp"],[_FM["fin"],_FM["math"],_FM["gltf"],_FM["ge"],_FM["html"]]);
  return _FM;})()

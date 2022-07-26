@@ -21544,7 +21544,7 @@ _FM["myapp"]=new Object();
           });
 
 
-          document.onmouseup = app.render_system.camera_state(true);
+          document.onmouseup = app.render_system.camera_state(false);
           if (is_mobile) {
               camera.set_position({ "pos": [0, 0, 30.7599], "eular": [0, 0, 0] });
 

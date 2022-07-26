@@ -22085,7 +22085,7 @@ gl_FragColor=u_draw_color;
 
           app.start(function () {
 
-          }, is_mobile ? (1 / 40) : (1 / 60));
+          }, is_mobile ? (1 / 20) : (1 / 40));
 
       }})().apply(_FM["myapp"],[_FM["fin"],_FM["math"],_FM["gltf"],_FM["ge"],_FM["html"]]);
  return _FM;})()
