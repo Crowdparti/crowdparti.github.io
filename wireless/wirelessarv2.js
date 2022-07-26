@@ -21524,7 +21524,14 @@ _FM["myapp"]=new Object();
 
          document.onmouseup = app.render_system.camera_state(false);
          // camera.set_position({ "pos": [-0.578000009059906, 0.8335222005844116, 64.32567596435547], "eular": [0.015, -3.6754e-15, 0] });
-                 
+  if (is_mobile) {
+    camera.set_position({ "pos": [0, 0, 103.9598159790039], "eular": [0, 0, 0] });
+
+  }
+  else {
+    camera.set_position({ "pos": [0, 10, 44.64701461791992], "eular": [0, 0, 0] });
+
+  }
 
           app.create_renderable(new ge.shading.light({
               intensity: 1,
